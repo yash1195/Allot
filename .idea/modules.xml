@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/Allot.iml" filepath="$PROJECT_DIR$/.idea/Allot.iml" />
       <module fileurl="file://$PROJECT_DIR$/Allot.iml" filepath="$PROJECT_DIR$/Allot.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
