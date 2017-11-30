@@ -24,8 +24,18 @@
         <activity android:name=".MainActivity" />
         <activity
             android:name=".LoginActivity"
-            android:label="@string/title_activity_login"></activity>
-        <activity android:name=".PlaceActivity" />
+            android:label="@string/title_activity_login" />
+        <activity
+            android:name=".PlaceActivity"
+            android:label="@string/title_activity_place"
+            android:parentActivityName=".LoginActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="madcourse.neu.edu.allot.LoginActivity" />
+        </activity>
+        <activity android:name=".ParticipantActivity" />
+        <activity android:name=".TaskActivity" />
     </application>
 
 </manifest>

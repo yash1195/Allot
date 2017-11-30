@@ -8,7 +8,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 public class SplashActivity extends AppCompatActivity {
-    private static final int SPLASH_SCREEN_TIME = 4000;
+    private static final int SPLASH_SCREEN_TIME = 2000;
     private ImageView logo;
 
     @Override
