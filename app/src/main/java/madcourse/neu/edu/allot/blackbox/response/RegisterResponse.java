@@ -1,14 +1,13 @@
 package madcourse.neu.edu.allot.blackbox.response;
 
-import android.util.Log;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 /**
- * Created by zeko on 11/28/17.
+ * Captures response on register.
  */
-public class LoginResponse {
+
+public class RegisterResponse {
 
     private String firstName;
     private String lastName;
@@ -88,12 +87,11 @@ public class LoginResponse {
         this.token = token;
     }
 
-    public static LoginResponse parseJson(String response) {
+    public static RegisterResponse parseJson(String response) {
 
         Gson gson = new GsonBuilder().create();
-        LoginResponse loginResponse = gson.fromJson(response, LoginResponse.class);
+        RegisterResponse registerResponse = gson.fromJson(response, RegisterResponse.class);
 
-        return loginResponse;
+        return registerResponse;
     }
-
 }

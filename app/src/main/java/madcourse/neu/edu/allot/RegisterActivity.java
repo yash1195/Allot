@@ -23,7 +23,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -36,31 +35,19 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
-import com.loopj.android.http.TextHttpResponseHandler;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import cz.msebera.android.httpclient.Header;
-import madcourse.neu.edu.allot.blackbox.handlers.LoginHandler;
+import madcourse.neu.edu.allot.blackbox.handlers.RegisterHandler;
 import madcourse.neu.edu.allot.blackbox.models.User;
-import madcourse.neu.edu.allot.blackbox.responders.LoginResponder;
-import madcourse.neu.edu.allot.blackbox.response.LoginResponse;
+import madcourse.neu.edu.allot.blackbox.responders.RegisterResponder;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
 /**
  * A login screen that offers login via email/password.
  */
-public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor>, LoginResponder {
-
-    private static final String LOGIN_URL = "http://allot.zeko.in/api/user/login";
-
-    RequestParams params;
-    AsyncHttpClient client;
+public class RegisterActivity extends AppCompatActivity implements LoaderCallbacks<Cursor>, RegisterResponder {
 
     /**
      * Id to identity READ_CONTACTS permission request.
@@ -88,61 +75,39 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_register);
 
-        // instantiate stuff
-        client = new AsyncHttpClient();
 
-        // Set up the login form.
-        mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
-        populateAutoComplete();
+        // get registration details
+        final EditText firstNameView = (EditText) findViewById(R.id.firstNameRegistration);
+        final EditText lastNameView = (EditText) findViewById(R.id.lastNameRegistration);
+        final EditText emailView = (EditText) findViewById(R.id.emailRegistration);
+        final EditText passwordView = (EditText) findViewById(R.id.passwordRegistration);
 
-        mPasswordView = (EditText) findViewById(R.id.password);
-        mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == EditorInfo.IME_ACTION_DONE || id == EditorInfo.IME_NULL) {
-                    attemptLogin();
-                    return true;
-                }
-                return false;
-            }
-        });
 
-        // sign in
-        Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
-        mEmailSignInButton.setOnClickListener(new OnClickListener() {
+        // register
+        Button userRegisterBtn = (Button) findViewById(R.id.register_user_btn);
+        userRegisterBtn.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View view) {
 
                 // hide keyboard
-                hideSoftKeyboard(LoginActivity.this);
+                hideSoftKeyboard(RegisterActivity.this);
 
-                LoginHandler.doLogin(LoginActivity.this,
-                        mEmailView.getText().toString(),
-                        mPasswordView.getText().toString());
-
+                RegisterHandler.doRegister(RegisterActivity.this,
+                        emailView.getText().toString(),
+                        passwordView.getText().toString(),
+                        firstNameView.getText().toString(),
+                        lastNameView.getText().toString());
             }
         });
 
-        // go to registration activity
-        Button goToRegistrationBtn = (Button) findViewById(R.id.go_to_register_button);
-        goToRegistrationBtn.setOnClickListener(new OnClickListener() {
 
-            @Override
-            public void onClick(View view) {
-
-                // go to registration activity
-                Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
-                startActivity(intent);
-            }
-        });
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
     }
-
 
     private void populateAutoComplete() {
         if (!mayRequestContacts()) {
@@ -323,19 +288,19 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private void addEmailsToAutoComplete(List<String> emailAddressCollection) {
         //Create adapter to tell the AutoCompleteTextView what to show in its dropdown list.
         ArrayAdapter<String> adapter =
-                new ArrayAdapter<>(LoginActivity.this,
+                new ArrayAdapter<>(RegisterActivity.this,
                         android.R.layout.simple_dropdown_item_1line, emailAddressCollection);
 
         mEmailView.setAdapter(adapter);
     }
 
     /**
-     * On login success.
+     * On register success.
      *
      * @param user conatins user info
      */
     @Override
-    public void successfulLogin(User user) {
+    public void successfulRegister(User user) {
 
         // store user details in shared preference
         SharedPreferences.Editor editor = getSharedPreferences(User.SHARED_PREF_GROUP, MODE_PRIVATE).edit();
@@ -353,12 +318,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
     /**
-     * On login failure.
+     * On register failure.
      *
      * @param msg failure message
      */
     @Override
-    public void failedLogin(String msg) {
+    public void failedRegister(String msg) {
 
         Context context = getApplicationContext();
 
@@ -367,8 +332,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         Toast toast = Toast.makeText(context, msg, duration);
         toast.show();
     }
-
-
 
     public static void hideSoftKeyboard(Activity activity) {
 
