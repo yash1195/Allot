@@ -1,4 +1,4 @@
-package madcourse.neu.edu.allot;
+package madcourse.neu.edu.allot.place;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,6 +8,9 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+
+import madcourse.neu.edu.allot.R;
+import madcourse.neu.edu.allot.participant.ParticipantActivity;
 
 public class DashboardFragment extends Fragment {
 

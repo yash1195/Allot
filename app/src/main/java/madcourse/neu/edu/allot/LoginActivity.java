@@ -33,6 +33,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import madcourse.neu.edu.allot.place.PlaceActivity;
+
 import static android.Manifest.permission.READ_CONTACTS;
 
 /**

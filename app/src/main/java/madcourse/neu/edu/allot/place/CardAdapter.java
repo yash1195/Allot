@@ -1,4 +1,4 @@
-package madcourse.neu.edu.allot;
+package madcourse.neu.edu.allot.place;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +10,8 @@ import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+
+import madcourse.neu.edu.allot.R;
 
 public class CardAdapter extends BaseAdapter implements ListAdapter {
     private ArrayList<String> list = new ArrayList<String>();

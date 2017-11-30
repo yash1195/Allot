@@ -1,4 +1,4 @@
-package madcourse.neu.edu.allot;
+package madcourse.neu.edu.allot.participant;
 
 import android.content.Context;
 import android.support.v7.widget.CardView;

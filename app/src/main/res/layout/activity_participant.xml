@@ -4,6 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="madcourse.neu.edu.allot.ParticipantActivity">
+    tools:context="madcourse.neu.edu.allot.participant.ParticipantActivity">
 
 </android.support.constraint.ConstraintLayout>

@@ -1,4 +1,4 @@
-package madcourse.neu.edu.allot;
+package madcourse.neu.edu.allot.place;
 
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -15,6 +15,8 @@ import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import madcourse.neu.edu.allot.R;
 
 public class PlaceActivity extends AppCompatActivity {
 
