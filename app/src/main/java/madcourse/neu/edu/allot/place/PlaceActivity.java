@@ -24,6 +24,7 @@ public class PlaceActivity extends AppCompatActivity {
 
     private SectionsPagerAdapter sectionsPagerAdapter;
     private ViewPager viewPager;
+    private String place;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +32,8 @@ public class PlaceActivity extends AppCompatActivity {
         setContentView(R.layout.activity_place);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        /* place = getIntent().getStringExtra("place");
+         toolbar.setTitle(place);*/
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         // Create the adapter that will return a fragment for each of the two
@@ -49,6 +52,8 @@ public class PlaceActivity extends AppCompatActivity {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
                 Intent intent = new Intent(getApplicationContext(), AddTaskActivity.class);
+                place = "Apartment";
+                intent.putExtra("place", place);
                 startActivity(intent);
             }
         });
