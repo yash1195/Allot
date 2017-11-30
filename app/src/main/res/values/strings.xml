@@ -26,4 +26,13 @@
     <string name="label_time">Date/Time</string>
     <string name="label_task">Task Name</string>
     <string name="text_tasks">Tasks</string>
+    <string name="title_activity_add_task">AddTaskActivity</string>
+    <string name="text_create_a_task">Create A Task</string>
+    <string name="text_task_name">Task Name:</string>
+    <string name="text_description">Description:</string>
+    <string name="text_allot_to">Allot To:</string>
+    <string name="button_choose_participant">Choose Participant</string>
+    <string name="text_location">Location:</string>
+    <string name="button_choose_location">Choose Location</string>
+    <string name="title_activity_maps">Map</string>
 </resources>

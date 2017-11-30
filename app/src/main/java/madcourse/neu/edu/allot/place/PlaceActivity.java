@@ -1,5 +1,6 @@
 package madcourse.neu.edu.allot.place;
 
+import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import madcourse.neu.edu.allot.R;
+import madcourse.neu.edu.allot.task.AddTaskActivity;
 
 public class PlaceActivity extends AppCompatActivity {
 
@@ -31,7 +33,7 @@ public class PlaceActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        // Create the adapter that will return a fragment for each of the three
+        // Create the adapter that will return a fragment for each of the two
         // primary sections of the activity.
         sectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         viewPager = (ViewPager) findViewById(R.id.container);
@@ -46,11 +48,18 @@ public class PlaceActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+                Intent intent = new Intent(getApplicationContext(), AddTaskActivity.class);
+                startActivity(intent);
             }
         });
 
     }
 
+    /**
+     * Sets up the viewpager.
+     *
+     * @param pager view pager
+     */
     private void setupViewPager(ViewPager pager) {
         SectionsPagerAdapter adapter = new SectionsPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new DashboardFragment(), "Dashboard");
@@ -58,6 +67,9 @@ public class PlaceActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
     }
 
+    /**
+     * Inner class needed for creating custom adapater.
+     */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         private final List<Fragment> fragmentList = new ArrayList<>();
