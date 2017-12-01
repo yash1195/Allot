@@ -19,9 +19,7 @@
     <string name="tab_dashboard">Dashboard</string>
     <string name="tab_tasks">Tasks</string>
     <string name="label_participants">Participants</string>
-<<<<<<< HEAD
     <string name="title_activity_register">Register</string>
-=======
     <string name="title_activity_place">PlaceActivity</string>
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
