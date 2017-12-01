@@ -51,7 +51,7 @@ public class CardAdapter extends BaseAdapter implements ListAdapter {
         }
 
         //Handle TextView and display string from your list
-        TextView listItemText = (TextView) view.findViewById(R.id.text_task_name);
+        TextView listItemText = (TextView) view.findViewById(R.id.text_participant_name);
         listItemText.setText(list.get(position));
         view.setOnClickListener(new View.OnClickListener() {
             @Override
