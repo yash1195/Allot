@@ -37,6 +37,10 @@
             android:name=".LoginActivity"
             android:label="@string/title_activity_login" />
         <activity
+            android:name=".group.GroupActivity"
+            android:label="Groups"
+            android:theme="@style/AppTheme" />
+        <activity
             android:name=".place.PlaceActivity"
             android:label="@string/title_activity_place"
             android:parentActivityName=".LoginActivity"

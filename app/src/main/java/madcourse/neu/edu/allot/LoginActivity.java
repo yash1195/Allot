@@ -33,6 +33,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import madcourse.neu.edu.allot.group.GroupActivity;
 import madcourse.neu.edu.allot.place.PlaceActivity;
 
 import static android.Manifest.permission.READ_CONTACTS;
@@ -90,7 +91,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             @Override
             public void onClick(View view) {
                 //attemptLogin();
-                Intent intent = new Intent(getApplicationContext(), PlaceActivity.class);
+                Intent intent = new Intent(getApplicationContext(), GroupActivity.class);
                 startActivity(intent);
             }
         });
