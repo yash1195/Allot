@@ -32,8 +32,8 @@ public class PlaceActivity extends AppCompatActivity {
         setContentView(R.layout.activity_place);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        /* place = getIntent().getStringExtra("place");
-         toolbar.setTitle(place);*/
+        place = getIntent().getStringExtra("place");
+        toolbar.setTitle(place);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         // Create the adapter that will return a fragment for each of the two

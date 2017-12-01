@@ -36,18 +36,18 @@ public class GroupActivity extends AppCompatActivity {
         userNameMenu.setText("Prachi Sharma");
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
-        mToggle = new ActionBarDrawerToggle(this, drawerLayout,R.string.open,R.string.close);
+        mToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
         drawerLayout.addDrawerListener(mToggle);
         mToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-       ArrayList<String> testingGroupButtons = new ArrayList();
+        ArrayList<String> testingGroupButtons = new ArrayList();
 
         testingGroupButtons.add("Appartment");
         testingGroupButtons.add("Office");
 
         cardAdapter = new CardAdapter(testingGroupButtons, getApplicationContext(),
-               R.layout.card_group, PlaceActivity.class);
+                R.layout.card_group, PlaceActivity.class);
         groupList = (ListView) findViewById(R.id.list_groups);
         groupList.setAdapter(cardAdapter);
 
@@ -56,7 +56,7 @@ public class GroupActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        if(mToggle.onOptionsItemSelected(item)){
+        if (mToggle.onOptionsItemSelected(item)) {
             return true;
         }
         return super.onOptionsItemSelected(item);

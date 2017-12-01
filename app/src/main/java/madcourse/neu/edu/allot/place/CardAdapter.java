@@ -52,13 +52,14 @@ public class CardAdapter extends BaseAdapter implements ListAdapter {
         }
 
         //Handle TextView and display string from your list
-        TextView listItemText = (TextView) view.findViewById(R.id.text_group_name);
+        TextView listItemText = (TextView) view.findViewById(R.id.label_card_title);
 
         listItemText.setText(list.get(position));
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, activity);
+                intent.putExtra("place", list.get(position));
                 context.startActivity(intent);
             }
         });
