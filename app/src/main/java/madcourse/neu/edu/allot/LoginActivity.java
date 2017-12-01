@@ -17,6 +17,7 @@ import com.loopj.android.http.AsyncHttpClient;
 import madcourse.neu.edu.allot.blackbox.handlers.LoginHandler;
 import madcourse.neu.edu.allot.blackbox.models.User;
 import madcourse.neu.edu.allot.blackbox.responders.LoginResponder;
+import madcourse.neu.edu.allot.group.GroupActivity;
 import madcourse.neu.edu.allot.place.PlaceActivity;
 
 /**
@@ -103,7 +104,7 @@ public class LoginActivity extends AppCompatActivity implements LoginResponder {
 
         editor.commit();
 
-        Intent intent = new Intent(getApplicationContext(), PlaceActivity.class);
+        Intent intent = new Intent(getApplicationContext(), GroupActivity.class);
         startActivity(intent);
     }
 

@@ -9,7 +9,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/text_task_name"
+            android:id="@+id/text_group_name"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:gravity="center"

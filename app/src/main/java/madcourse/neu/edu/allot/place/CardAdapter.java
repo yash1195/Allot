@@ -2,6 +2,7 @@ package madcourse.neu.edu.allot.place;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,7 +52,8 @@ public class CardAdapter extends BaseAdapter implements ListAdapter {
         }
 
         //Handle TextView and display string from your list
-        TextView listItemText = (TextView) view.findViewById(R.id.text_participant_name);
+        TextView listItemText = (TextView) view.findViewById(R.id.text_group_name);
+
         listItemText.setText(list.get(position));
         view.setOnClickListener(new View.OnClickListener() {
             @Override
