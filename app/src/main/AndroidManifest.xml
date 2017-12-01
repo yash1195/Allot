@@ -7,7 +7,13 @@
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 
-    <!-- Permissions -->
+    <!--
+         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
+         Google Maps Android API v2, but you must specify either coarse or fine
+         location permissions for the 'MyLocation' functionality.
+    -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -17,7 +23,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SplashActivity">
+        <activity
+            android:name=".SplashActivity"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,10 +36,62 @@
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login" />
-        <activity android:name=".PlaceActivity" />
         <activity
-            android:name=".RegisterActivity"
-            android:label="@string/title_activity_register"></activity>
+            android:name=".group.GroupActivity"
+            android:label="Groups"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".place.PlaceActivity"
+            android:label="@string/title_activity_place"
+            android:parentActivityName=".group.GroupActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="madcourse.neu.edu.allot.group.GroupActivity" />
+        </activity>
+        <activity
+            android:name=".participant.ParticipantActivity"
+            android:label="ParticipantActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="madcourse.neu.edu.allot.place.PlaceActivity" />
+        </activity>
+        <activity
+            android:name=".task.TaskActivity"
+            android:label="TaskActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="madcourse.neu.edu.allot.place.PlaceActivity" />
+        </activity>
+        <activity
+            android:name=".task.AddTaskActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="madcourse.neu.edu.allot.place.PlaceActivity" />
+        </activity>
+        <!--
+             The API key for Google Maps-based APIs is defined as a string resource.
+             (See the file "res/values/google_maps_api.xml").
+             Note that the API key is linked to the encryption key used to sign the APK.
+             You need a different API key for each encryption key, including the release key that is used to
+             sign the APK for publishing.
+             You can define the keys for the debug and release targets in src/debug/ and src/release/.
+        -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
+        <activity
+            android:name=".task.MapsActivity"
+            android:label="@string/title_activity_maps"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="madcourse.neu.edu.allot.task.AddTaskActivity" />
+        </activity>
     </application>
 
 </manifest>
