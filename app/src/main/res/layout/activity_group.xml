@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawerLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="madcourse.neu.edu.allot.group.GroupActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ListView
+            android:id="@+id/list_groups"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+
+    </LinearLayout>
+
+    <android.support.design.widget.NavigationView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity ="start">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="110dp"
+            android:background="#4ECDC4"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/userNameMenu"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="serif"
+                android:text="PRACHI SHARMA"
+                android:textSize="18sp"
+                android:textColor="#292F36"/>
+
+        </LinearLayout>
+
+
+            <Button
+                android:id="@+id/groupsButton"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:text="Groups"/>
+
+
+            <Button
+                android:id="@+id/settingsButton"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:text="Home"/>
+
+            <Button
+                android:id="@+id/Logout"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:text="LogOut"/>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:layout_marginTop="120dp"
+                android:text="A L L O T"/>
+
+
+        </LinearLayout>
+
+
+
+    </android.support.design.widget.NavigationView>
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/joinGroupTextfab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginBottom="190dp"
+            android:layout_marginRight="80dp"
+            android:fontFamily="serif"
+            android:text="Join Group"
+            android:textSize="24sp"
+            android:visibility="invisible" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/joinGroupFab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginRight="@dimen/fab_margin"
+            android:layout_marginBottom="180dp"
+            android:src="@drawable/plussign"
+            android:background="@color/colorBackground"
+            android:elevation="6dp"
+            app:pressedTranslationZ="12dp"
+            android:visibility="invisible"
+            />
+
+        <TextView
+            android:id="@+id/createGroupTextfab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginBottom="115dp"
+            android:layout_marginRight="80dp"
+            android:fontFamily="serif"
+            android:text="Create Group"
+            android:textSize="24sp"
+            android:visibility="invisible" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/createGoupFab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginRight="@dimen/fab_margin"
+            android:layout_marginBottom="100dp"
+            android:src="@drawable/plussign"
+            android:elevation="6dp"
+            app:pressedTranslationZ="12dp"
+            android:visibility="invisible"
+            />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginRight="@dimen/fab_margin"
+            android:layout_marginBottom="@dimen/fab_margin"
+            android:src="@drawable/plussign"
+            android:background="@color/colorBackground"
+            android:elevation="6dp"
+            app:pressedTranslationZ="12dp"
+            />
+
+
+
+    </android.support.design.widget.CoordinatorLayout>
+
+</android.support.v4.widget.DrawerLayout>
