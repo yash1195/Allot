@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -18,7 +17,6 @@ import madcourse.neu.edu.allot.blackbox.handlers.LoginHandler;
 import madcourse.neu.edu.allot.blackbox.models.User;
 import madcourse.neu.edu.allot.blackbox.responders.LoginResponder;
 import madcourse.neu.edu.allot.group.GroupActivity;
-import madcourse.neu.edu.allot.place.PlaceActivity;
 
 /**
  * A login screen that offers login via email/password.

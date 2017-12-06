@@ -42,7 +42,7 @@ public class BackendTestActivity extends AppCompatActivity implements FetchGroup
 
     @Override
     public void onSuccessfullGroupsFetch(List<Group> groups) {
-        
+
     }
 
     @Override

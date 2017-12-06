@@ -40,10 +40,6 @@
             android:name=".RegisterActivity"
             android:label="Register Activity" />
         <activity
-            android:name=".group.GroupActivity"
-            android:label="Groups"
-            android:theme="@style/AppTheme" />
-        <activity
             android:name=".place.PlaceActivity"
             android:label="@string/title_activity_place"
             android:parentActivityName=".group.GroupActivity"
@@ -98,6 +94,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".group.CreateGroupActivity" />
+        <activity android:name=".group.GroupActivity"></activity>
     </application>
 
 </manifest>
