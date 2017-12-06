@@ -1,10 +1,13 @@
 package madcourse.neu.edu.allot.blackbox.handlers;
 
+import android.util.Log;
+
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
 
 import cz.msebera.android.httpclient.Header;
+import madcourse.neu.edu.allot.LoginActivity;
 import madcourse.neu.edu.allot.blackbox.api.AllotApi;
 import madcourse.neu.edu.allot.blackbox.models.User;
 import madcourse.neu.edu.allot.blackbox.responders.LoginResponder;
@@ -42,6 +45,8 @@ public class LoginHandler {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
+
+                Log.d("AllotApi", responseString);
 
                 LoginResponse resp = LoginResponse.parseJson(responseString);
 

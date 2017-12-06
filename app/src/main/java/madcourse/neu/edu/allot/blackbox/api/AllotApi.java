@@ -13,4 +13,7 @@ public class AllotApi {
 
     // register
     public static final String REGISTER_URL = BASE_URL + "user/register";
+
+    // fetch groups that user has joined
+    public static final String FETCH_USER_GROUPS = BASE_URL + "group/joined";
 }
