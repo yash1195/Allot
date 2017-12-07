@@ -2,7 +2,11 @@ package madcourse.neu.edu.allot.task;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.app.PendingIntent;
+import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -10,19 +14,21 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.TimePicker;
 
 import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.GeofencingClient;
@@ -33,23 +39,27 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import madcourse.neu.edu.allot.BuildConfig;
 import madcourse.neu.edu.allot.R;
 import madcourse.neu.edu.allot.blackbox.models.User;
-import madcourse.neu.edu.allot.place.PlaceActivity;
 
-public class AddTaskActivity extends AppCompatActivity implements OnCompleteListener<Void> {
+public class AddTaskActivity extends AppCompatActivity implements OnCompleteListener<Void>,
+        DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
     private EditText taskName;
     private EditText description;
     private EditText location;
+    private EditText setTime;
     private Button buttonParticipant;
     private Button buttonLocation;
     private ListView allotList;
+    private Button buttonTime;
     private List<CheckboxModel> users;
     private CheckboxAdapter checkboxAdapter;
+    private int day, month, year, hour, minute;
 
     private LatLng selectedLatLng;
     private String nameOfLocation;
@@ -68,8 +78,21 @@ public class AddTaskActivity extends AppCompatActivity implements OnCompleteList
 
         taskName = (EditText) findViewById(R.id.editText_taskname);
         description = (EditText) findViewById(R.id.editText_description);
-        buttonLocation = (Button) findViewById(R.id.button_choose_location);
         location = (EditText) findViewById(R.id.text_location);
+        setTime = (EditText) findViewById(R.id.editText_set_time);
+        buttonLocation = (Button) findViewById(R.id.button_choose_location);
+        buttonTime = (Button) findViewById(R.id.button_set_time);
+        buttonTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar calendar = Calendar.getInstance();
+                DatePickerDialog datePickerDialog = new DatePickerDialog(AddTaskActivity.this,
+                        AddTaskActivity.this,
+                        calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
+                        calendar.get(Calendar.DAY_OF_MONTH));
+                datePickerDialog.show();
+            }
+        });
         allotList = (ListView) findViewById(R.id.list_allot_participant);
 
         // This is where you pass the list of participants in the group
@@ -136,12 +159,8 @@ public class AddTaskActivity extends AppCompatActivity implements OnCompleteList
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_add) {
-            if (!checkPermissions()) {
-                requestPermissions();
-                return false;
-            }
-            if (taskName.getText().toString().trim().isEmpty()) {
-                // TODO: show dialog that says TaskName required.
+
+            if (!checkRequirements()) {
                 return false;
             }
             if (selectedLatLng != null) {
@@ -170,6 +189,50 @@ public class AddTaskActivity extends AppCompatActivity implements OnCompleteList
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * Checks requirements to create a task.
+     *
+     * @return true if all requirements are satisfied
+     */
+    public boolean checkRequirements() {
+        if (!checkPermissions()) {
+            requestPermissions();
+            return false;
+        }
+        AlertDialog.Builder builder;
+        if (taskName.getText().toString().trim().isEmpty()) {
+            // TODO: show dialog that says TaskName required.
+            builder = new AlertDialog.Builder(this);
+            builder.setTitle("Incomplete");
+            builder.setMessage("Task name required to create task");
+            builder.setCancelable(false);
+            builder.setPositiveButton(R.string.label_ok, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+
+                }
+            });
+            final Dialog dialog = builder.create();
+            dialog.show();
+            return false;
+        }
+        if (setTime.getText().toString().trim().isEmpty()) {
+            builder = new AlertDialog.Builder(this);
+            builder.setTitle("Incomplete");
+            builder.setMessage("Time required to create task");
+            builder.setCancelable(false);
+            builder.setPositiveButton(R.string.label_ok, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                }
+            });
+            final Dialog dialog = builder.create();
+            dialog.show();
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -315,5 +378,25 @@ public class AddTaskActivity extends AppCompatActivity implements OnCompleteList
     private boolean getGeofencesAdded() {
         return PreferenceManager.getDefaultSharedPreferences(this).getBoolean(
                 GEOFENCES_ADDED_KEY, false);
+    }
+
+    @Override
+    public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+        year = i;
+        month = i1 + 1;
+        day = i2;
+
+        Calendar calendar = Calendar.getInstance();
+        TimePickerDialog timePickerDialog = new TimePickerDialog(AddTaskActivity.this,
+                AddTaskActivity.this, calendar.get(Calendar.HOUR_OF_DAY),
+                calendar.get(Calendar.MINUTE), DateFormat.is24HourFormat(this));
+        timePickerDialog.show();
+    }
+
+    @Override
+    public void onTimeSet(TimePicker timePicker, int i, int i1) {
+        hour = i;
+        minute = i1;
+        setTime.setText(i + ":" + i1 + " on " + month + "/" + day + "/" + year);
     }
 }

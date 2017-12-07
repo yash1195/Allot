@@ -53,4 +53,5 @@
     <string name="button_set_time">Pick a time</string>
     <string name="hint_set_time">Set a time</string>
     <string name="button_set_time2">Choose Time</string>
+    <string name="label_ok">OK</string>
 </resources>
