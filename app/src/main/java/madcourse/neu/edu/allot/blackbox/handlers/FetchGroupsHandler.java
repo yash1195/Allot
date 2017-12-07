@@ -52,8 +52,6 @@ public class FetchGroupsHandler {
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
 
-                Log.d("AllotApi", responseString);
-
                 FetchUserGroupsResponse resp = FetchUserGroupsResponse.parseJson(responseString);
 
                 int status = resp.getStatus();

@@ -46,8 +46,6 @@ public class LoginHandler {
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
 
-                Log.d("AllotApi", responseString);
-
                 LoginResponse resp = LoginResponse.parseJson(responseString);
 
                 int status = resp.getStatus();
