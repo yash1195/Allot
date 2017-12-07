@@ -6,6 +6,8 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
 
+import java.util.List;
+
 import cz.msebera.android.httpclient.Header;
 import madcourse.neu.edu.allot.blackbox.api.AllotApi;
 import madcourse.neu.edu.allot.blackbox.models.Group;
@@ -56,24 +58,14 @@ public class FetchGroupsHandler {
 
                 int status = resp.getStatus();
 
-                Log.d("AllotApi", "" + resp.getGroups().get(0).getCode());
-
 
                 if (status == 200) {
 
-//                    User user = new User();
-//
-//                    // add user information
-//                    user.setFirstName(resp.getFirstName());
-//                    user.setLastName(resp.getLastName());
-//                    user.setEmail(resp.getEmail());
-//                    user.setId(resp.getId());
-//                    user.setEmail(resp.getEmail());
-//                    user.setToken(resp.getToken());
-//
-//                    responder.successfulLogin(user);
+                    List<Group> groups = resp.getGroups();
+                    responder.onSuccessfullGroupsFetch(groups);
+
                 } else {
-//                    responder.failedLogin("Invalid username/password");
+                    responder.onFailedGroupsFetch("Server Error");
                 }
             }
         });

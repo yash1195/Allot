@@ -16,4 +16,7 @@ public class AllotApi {
 
     // fetch groups that user has joined
     public static final String FETCH_USER_GROUPS = BASE_URL + "group/joined";
+
+    // create group
+    public static final String CREATE_GROUP = BASE_URL + "group/create";
 }

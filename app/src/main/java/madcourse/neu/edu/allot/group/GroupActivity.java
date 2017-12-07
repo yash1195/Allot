@@ -1,12 +1,14 @@
 package madcourse.neu.edu.allot.group;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
@@ -16,12 +18,18 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import madcourse.neu.edu.allot.LoginActivity;
 import madcourse.neu.edu.allot.R;
+import madcourse.neu.edu.allot.blackbox.handlers.FetchGroupsHandler;
+import madcourse.neu.edu.allot.blackbox.models.Group;
+import madcourse.neu.edu.allot.blackbox.models.User;
+import madcourse.neu.edu.allot.blackbox.responders.FetchGroupsResponder;
 import madcourse.neu.edu.allot.place.CardAdapter;
 import madcourse.neu.edu.allot.place.PlaceActivity;
 
-public class GroupActivity extends AppCompatActivity {
+public class GroupActivity extends AppCompatActivity implements FetchGroupsResponder {
 
     private ListView groupList;
     private CardAdapter cardAdapter;
@@ -106,17 +114,22 @@ public class GroupActivity extends AppCompatActivity {
 
 
         /**
-         * Group List
+         * User credentials.
          */
-        ArrayList<String> testingGroupButtons = new ArrayList();
+        SharedPreferences sharedPref = getSharedPreferences(User.SHARED_PREF_GROUP, MODE_PRIVATE);
 
-        testingGroupButtons.add("Appartment");
-        testingGroupButtons.add("Office");
+        String userId = sharedPref.getString(User.SHARED_PREF_TAG_ID, "NA");
+        String userToken = sharedPref.getString(User.SHARED_PREF_TAG_TOKEN, "NA");
 
-        cardAdapter = new CardAdapter(testingGroupButtons, getApplicationContext(),
-                R.layout.card_group, PlaceActivity.class);
-        groupList = (ListView) findViewById(R.id.list_groups);
-        groupList.setAdapter(cardAdapter);
+        Log.d("AllotApi", userToken);
+
+        /**
+         * Fetch Group List
+         */
+
+        FetchGroupsHandler.doFetch(this, userId, userToken);
+
+
     }
 
     public void getNevigationBar(){
@@ -151,4 +164,29 @@ public class GroupActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onSuccessfullGroupsFetch(List<Group> groups) {
+
+        /**
+         * Group List
+         */
+        ArrayList<String> testingGroupButtons = new ArrayList();
+
+        for (Group group: groups) {
+            Log.d("GroupCheck", group.getName());
+            testingGroupButtons.add(group.getName());
+        }
+//        testingGroupButtons.add("Appartment");
+//        testingGroupButtons.add("Office");
+
+        cardAdapter = new CardAdapter(testingGroupButtons, getApplicationContext(),
+                R.layout.card_group, PlaceActivity.class);
+        groupList = (ListView) findViewById(R.id.list_groups);
+        groupList.setAdapter(cardAdapter);
+    }
+
+    @Override
+    public void onFailedGroupsFetch(String msg) {
+
+    }
 }
