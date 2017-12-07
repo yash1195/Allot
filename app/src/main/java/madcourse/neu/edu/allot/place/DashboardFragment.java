@@ -20,6 +20,7 @@ public class DashboardFragment extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        
         View rootView = inflater.inflate(R.layout.fragment_dashboard, container, false);
         /*cardList = new ArrayList<>();
         participantList = rootView.findViewById(R.id.list_participants);

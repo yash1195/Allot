@@ -19,4 +19,7 @@ public class AllotApi {
 
     // create group
     public static final String CREATE_GROUP = BASE_URL + "group/create";
+
+    // join group
+    public static final String JOIN_GROUP = BASE_URL + "group/join";
 }
