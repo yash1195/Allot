@@ -21,6 +21,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.android.gms.location.Geofence;
@@ -36,6 +37,7 @@ import java.util.List;
 
 import madcourse.neu.edu.allot.BuildConfig;
 import madcourse.neu.edu.allot.R;
+import madcourse.neu.edu.allot.blackbox.models.User;
 import madcourse.neu.edu.allot.place.PlaceActivity;
 
 public class AddTaskActivity extends AppCompatActivity implements OnCompleteListener<Void> {
@@ -45,6 +47,9 @@ public class AddTaskActivity extends AppCompatActivity implements OnCompleteList
     private EditText location;
     private Button buttonParticipant;
     private Button buttonLocation;
+    private ListView allotList;
+    private List<CheckboxModel> users;
+    private CheckboxAdapter checkboxAdapter;
 
     private LatLng selectedLatLng;
     private String nameOfLocation;
@@ -63,9 +68,25 @@ public class AddTaskActivity extends AppCompatActivity implements OnCompleteList
 
         taskName = (EditText) findViewById(R.id.editText_taskname);
         description = (EditText) findViewById(R.id.editText_description);
-        buttonParticipant = (Button) findViewById(R.id.button_allot);
         buttonLocation = (Button) findViewById(R.id.button_choose_location);
         location = (EditText) findViewById(R.id.text_location);
+        allotList = (ListView) findViewById(R.id.list_allot_participant);
+
+        // This is where you pass the list of participants in the group
+        // I am passing in an object called CheckboxModel which contains a User instance and a boolean
+        // this way, we can know which particpants were selected when the task is created.
+        users = new ArrayList<>();
+        User user = new User();
+        user.setFirstName("Nay");
+        users.add(new CheckboxModel(user));
+        User user1 = new User();
+        user1.setFirstName("Yash");
+        users.add(new CheckboxModel(user1));
+        User user3 = new User();
+        user3.setFirstName("Prachi");
+        users.add(new CheckboxModel(user3));
+        checkboxAdapter = new CheckboxAdapter(users, this, R.layout.card_checkbox_participant);
+        allotList.setAdapter(checkboxAdapter);
     }
 
     @Override
@@ -115,6 +136,14 @@ public class AddTaskActivity extends AppCompatActivity implements OnCompleteList
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_add) {
+            if (!checkPermissions()) {
+                requestPermissions();
+                return false;
+            }
+            if (taskName.getText().toString().trim().isEmpty()) {
+                // TODO: show dialog that says TaskName required.
+                return false;
+            }
             if (selectedLatLng != null) {
                 geofenceList.add(new Geofence.Builder()
                         .setRequestId(nameOfLocation)
@@ -130,16 +159,29 @@ public class AddTaskActivity extends AppCompatActivity implements OnCompleteList
                         .setLoiteringDelay(15000)
                         .build());
                 geofencingClient = LocationServices.getGeofencingClient(this);
-                if (!checkPermissions()) {
-                    requestPermissions();
-                    return false;
-                }
+
                 geofencingClient.addGeofences(getGeofencingRequest(), getGeofencePendingIntent())
                         .addOnCompleteListener(this);
             }
+
+            // TODO: create a task object and store
+
+            finish();
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * Creates a task object with user inputs.
+     */
+    public void createTask() {
+        for (CheckboxModel checkbox : users) {
+            if (checkbox.checked) {
+                // TODO: include this user as a participant for the task
+                // Access user with checkbox.user
+            }
+        }
     }
 
     public GeofencingRequest getGeofencingRequest() {

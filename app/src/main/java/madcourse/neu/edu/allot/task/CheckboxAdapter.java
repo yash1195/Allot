@@ -1,30 +1,28 @@
-package madcourse.neu.edu.allot.place;
+package madcourse.neu.edu.allot.task;
+
 
 import android.content.Context;
-import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ListAdapter;
-import android.widget.TextView;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import madcourse.neu.edu.allot.R;
 
-public class CardAdapter extends BaseAdapter implements ListAdapter {
-    private ArrayList<String> list = new ArrayList<String>();
+public class CheckboxAdapter extends BaseAdapter implements ListAdapter {
+    private List<CheckboxModel> list;
     private Context context;
     private int layout;
-    private Class activity;
 
-    public CardAdapter(ArrayList<String> list, Context context, int layout, Class activity) {
+    public CheckboxAdapter(List<CheckboxModel> list, Context context, int layout) {
         this.list = list;
         this.context = context;
         this.layout = layout;
-        this.activity = activity;
     }
 
     @Override
@@ -52,15 +50,12 @@ public class CardAdapter extends BaseAdapter implements ListAdapter {
         }
 
         //Handle TextView and display string from your list
-        TextView listItemText = (TextView) view.findViewById(R.id.label_card_title);
-
-        listItemText.setText(list.get(position));
-        view.setOnClickListener(new View.OnClickListener() {
+        CheckBox checkBox = (CheckBox) view.findViewById(R.id.checkBox);
+        checkBox.setText(list.get(position).user.getFirstName());
+        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context, activity);
-                intent.putExtra("place", list.get(position));
-                context.startActivity(intent);
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                list.get(position).checked = b;
             }
         });
         return view;

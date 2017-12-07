@@ -44,10 +44,13 @@
     <string name="text_pick_location">Pick a location</string>
     <string name="label_select">Select</string>
     <string name="label_add">Add</string>
-    <string name="label_set_time">Set Time:</string>
+    <string name="label_set_time">Time:</string>
     <string name="permission_denied_explanation">Need permission for geofence alerts</string>
     <string name="settings">Settings</string>
     <string name="geofence_transition_entered">Your task is nearby. Click to view details</string>
     <string name="geofence_transition_exited">Exited a task area</string>
     <string name="unknown_geofence_transition">Unknown Geofence transition</string>
+    <string name="button_set_time">Pick a time</string>
+    <string name="hint_set_time">Set a time</string>
+    <string name="button_set_time2">Choose Time</string>
 </resources>
