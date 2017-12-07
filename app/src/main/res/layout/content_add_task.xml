@@ -81,25 +81,42 @@
         app:layout_constraintTop_toBottomOf="@+id/editText_description" />
 
     <TextView
-        android:id="@+id/text_location"
+        android:id="@+id/label_location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:text="@string/text_location"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/button_choose_location"
+        app:layout_constraintBottom_toBottomOf="@+id/text_location"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/button_choose_location" />
+        app:layout_constraintTop_toTopOf="@+id/text_location" />
 
     <Button
         android:id="@+id/button_choose_location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginTop="16dp"
         android:onClick="chooseLocation"
         android:text="@string/button_choose_location"
-        app:layout_constraintStart_toEndOf="@+id/text_location"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/label_location" />
+
+    <EditText
+        android:id="@+id/text_location"
+        android:layout_width="258dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:editable="false"
+        android:hint="@string/text_pick_location"
+        android:textSize="18sp"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/label_location"
         app:layout_constraintTop_toBottomOf="@+id/button_allot" />
 
 </android.support.constraint.ConstraintLayout>

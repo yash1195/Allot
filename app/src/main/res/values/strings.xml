@@ -41,4 +41,5 @@
     <string name="open">open</string>
     <string name="close">close</string>
     <string name="title_activity_backend_test">BackendTestActivity</string>
+    <string name="text_pick_location">Pick a location</string>
 </resources>
