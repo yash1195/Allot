@@ -116,7 +116,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             LatLng latLng = new LatLng(mCurrentLocation.getLatitude(),
                     mCurrentLocation.getLongitude());
             returnIntent.putExtra("placename", getAddressFromLatlng(latLng));
-            //returnIntent.putExtra("latlng", latLng);
+            returnIntent.putExtra("latlng", latLng);
             setResult(Activity.RESULT_OK, returnIntent);
             finish();
             return true;

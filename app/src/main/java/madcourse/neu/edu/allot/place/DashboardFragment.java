@@ -24,10 +24,6 @@ public class DashboardFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_dashboard, container, false);
-        /*cardList = new ArrayList<>();
-        participantList = rootView.findViewById(R.id.list_participants);
-        adapter = new ArrayAdapter<>(rootView.getContext(), android.R.layout.simple_list_item_1, cardList);
-        participantList.setAdapter(adapter);*/
 
         Group groupData = (Group) getArguments().getSerializable("groupData");
 
