@@ -23,8 +23,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <service android:name=".task.GeofenceTransitionsIntentService"/>
+        <service android:name=".task.GeofenceTransitionsIntentService" />
 
         <activity
             android:name=".SplashActivity"
@@ -61,7 +60,7 @@
         </activity>
         <activity
             android:name=".task.TaskActivity"
-            android:label="TaskActivity"
+            android:label="Task"
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -105,6 +104,9 @@
         <activity android:name=".group.CreateGroupActivity" />
         <activity android:name=".group.GroupActivity" />
         <activity android:name=".group.JoinGroupActivity" />
+        <activity android:name=".task.PopUpActivity"
+            android:label="Shake To Nudge"
+            android:theme="@style/AppTheme.Popup"></activity>
     </application>
 
 </manifest>
