@@ -129,15 +129,11 @@ public class GroupActivity extends AppCompatActivity implements FetchGroupsRespo
         String userId = sharedPref.getString(User.SHARED_PREF_TAG_ID, "NA");
         String userToken = sharedPref.getString(User.SHARED_PREF_TAG_TOKEN, "NA");
 
-        Log.d("AllotApi", userToken);
-
         /**
          * Fetch Group List
          */
 
         FetchGroupsHandler.doFetch(this, userId, userToken);
-
-
     }
 
     public void getNevigationBar(){
@@ -184,8 +180,6 @@ public class GroupActivity extends AppCompatActivity implements FetchGroupsRespo
             Log.d("GroupCheck", group.getName());
             testingGroupButtons.add(group.getName());
         }
-//        testingGroupButtons.add("Appartment");
-//        testingGroupButtons.add("Office");
 
         cardAdapter = new CardAdapter(testingGroupButtons, getApplicationContext(),
                 R.layout.card_group, PlaceActivity.class);

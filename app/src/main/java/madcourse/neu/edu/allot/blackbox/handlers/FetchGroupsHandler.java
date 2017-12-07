@@ -56,7 +56,6 @@ public class FetchGroupsHandler {
 
                 int status = resp.getStatus();
 
-
                 if (status == 200) {
 
                     List<Group> groups = resp.getGroups();
