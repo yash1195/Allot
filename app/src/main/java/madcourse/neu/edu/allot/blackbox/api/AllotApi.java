@@ -22,4 +22,7 @@ public class AllotApi {
 
     // join group
     public static final String JOIN_GROUP = BASE_URL + "group/join";
+
+    // get group tasks
+    public static final String FETCH_GROUP_TASKS = BASE_URL + "task/getGroupTasks";
 }

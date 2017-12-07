@@ -10,6 +10,8 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 import madcourse.neu.edu.allot.R;
+import madcourse.neu.edu.allot.blackbox.models.Group;
+import madcourse.neu.edu.allot.blackbox.models.User;
 import madcourse.neu.edu.allot.participant.ParticipantActivity;
 
 public class DashboardFragment extends Fragment {
@@ -27,9 +29,14 @@ public class DashboardFragment extends Fragment {
         adapter = new ArrayAdapter<>(rootView.getContext(), android.R.layout.simple_list_item_1, cardList);
         participantList.setAdapter(adapter);*/
 
+        Group groupData = (Group) getArguments().getSerializable("groupData");
+
         list = new ArrayList<>();
-        list.add("Item 1");
-        list.add("Item 2");
+
+        for (User member: groupData.getMembers()) {
+            list.add(member.getFirstName() + " " + member.getLastName());
+        }
+
         cardAdapter = new CardAdapter(list, rootView.getContext(),
                 R.layout.card_participant, ParticipantActivity.class);
         participantList = rootView.findViewById(R.id.list_participants);

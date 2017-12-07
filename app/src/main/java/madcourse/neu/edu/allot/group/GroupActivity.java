@@ -8,7 +8,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
@@ -20,13 +19,13 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import madcourse.neu.edu.allot.LoginActivity;
 import madcourse.neu.edu.allot.R;
 import madcourse.neu.edu.allot.blackbox.handlers.FetchGroupsHandler;
 import madcourse.neu.edu.allot.blackbox.models.Group;
 import madcourse.neu.edu.allot.blackbox.models.User;
 import madcourse.neu.edu.allot.blackbox.responders.FetchGroupsResponder;
 import madcourse.neu.edu.allot.place.CardAdapter;
+import madcourse.neu.edu.allot.place.GroupListCardAdapter;
 import madcourse.neu.edu.allot.place.PlaceActivity;
 
 public class GroupActivity extends AppCompatActivity implements FetchGroupsResponder {
@@ -140,6 +139,7 @@ public class GroupActivity extends AppCompatActivity implements FetchGroupsRespo
     }
 
     public void getNevigationBar() {
+
         /**
          * Navigation bar
          */
@@ -193,14 +193,14 @@ public class GroupActivity extends AppCompatActivity implements FetchGroupsRespo
         ArrayList<String> testingGroupButtons = new ArrayList();
 
         for (Group group : groups) {
-            Log.d("GroupCheck", group.getName());
+
             testingGroupButtons.add(group.getName());
         }
 
-        cardAdapter = new CardAdapter(testingGroupButtons, getApplicationContext(),
-                R.layout.card_group, PlaceActivity.class);
+        GroupListCardAdapter adapter = new GroupListCardAdapter(groups, getApplicationContext(), R.layout.card_group, PlaceActivity.class);
+
         groupList = (ListView) findViewById(R.id.list_groups);
-        groupList.setAdapter(cardAdapter);
+        groupList.setAdapter(adapter);
     }
 
     @Override

@@ -1,9 +1,11 @@
 package madcourse.neu.edu.allot.blackbox.models;
 
+import java.io.Serializable;
+
 /**
  * User model.
  */
-public class User {
+public class User implements Serializable {
 
     public static final String SHARED_PREF_GROUP = "LOGGED_IN_USER_DETAILS";
     public static final String SHARED_PREF_TAG_FIRST_NAME = "LOGGED_IN_USER_FIRST_NAME";
