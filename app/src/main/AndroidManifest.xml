@@ -88,14 +88,17 @@
             android:name=".BackendTestActivity"
             android:label="@string/title_activity_backend_test"
             android:theme="@style/AppTheme.NoActionBar">
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
 
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
         <activity android:name=".group.CreateGroupActivity" />
-        <activity android:name=".group.GroupActivity"></activity>
+        <activity android:name=".group.GroupActivity" />
+        <activity android:name=".group.JoinGroupActivity"></activity>
     </application>
 
 </manifest>
