@@ -21,7 +21,6 @@ import com.google.android.gms.location.GeofencingEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-import madcourse.neu.edu.allot.MainActivity;
 import madcourse.neu.edu.allot.R;
 import madcourse.neu.edu.allot.group.GroupActivity;
 import madcourse.neu.edu.allot.place.PlaceActivity;
