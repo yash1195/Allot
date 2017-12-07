@@ -24,7 +24,6 @@ public class JoinGroupActivity extends AppCompatActivity implements JoinGroupRes
     Button joinGroupButton;
     EditText joinGroupEditText;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

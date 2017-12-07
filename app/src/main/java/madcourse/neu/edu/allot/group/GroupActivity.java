@@ -34,9 +34,11 @@ public class GroupActivity extends AppCompatActivity implements FetchGroupsRespo
     private ListView groupList;
     private CardAdapter cardAdapter;
 
+    String userFirstName, userLastName, userEmailId;
+
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle mToggle;
-    TextView userNameMenu;
+    TextView userNameMenu,userEmail;
     Button settingsButton;
     Button logout;
     Button groupsButton;
@@ -64,20 +66,20 @@ public class GroupActivity extends AppCompatActivity implements FetchGroupsRespo
         fabCreateGroup = (FloatingActionButton) findViewById(R.id.createGoupFab);
         fabJoinGroup = (FloatingActionButton) findViewById(R.id.joinGroupFab);
 
-        fabOpen = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_open);
-        fabClose = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_close);
-        fabRotateClockwise = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_rotate_clockwise);
-        fabRotateAntiClockwise = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_rotate_anticlockwise);
+        fabOpen = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
+        fabClose = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_close);
+        fabRotateClockwise = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_rotate_clockwise);
+        fabRotateAntiClockwise = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_rotate_anticlockwise);
 
-        fabCreateGroupText =(TextView) findViewById(R.id.createGroupTextfab);
-        fabJoinGroupText =(TextView) findViewById(R.id.joinGroupTextfab);
+        fabCreateGroupText = (TextView) findViewById(R.id.createGroupTextfab);
+        fabJoinGroupText = (TextView) findViewById(R.id.joinGroupTextfab);
 
 
         fabplus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                if(isOpen){
+                if (isOpen) {
 
                     fabCreateGroup.startAnimation(fabClose);
                     fabJoinGroup.startAnimation(fabClose);
@@ -88,8 +90,7 @@ public class GroupActivity extends AppCompatActivity implements FetchGroupsRespo
                     fabJoinGroup.setClickable(false);
                     isOpen = false;
 
-                }
-                else{
+                } else {
 
                     fabCreateGroup.startAnimation(fabOpen);
                     fabJoinGroup.startAnimation(fabOpen);
@@ -128,6 +129,8 @@ public class GroupActivity extends AppCompatActivity implements FetchGroupsRespo
 
         String userId = sharedPref.getString(User.SHARED_PREF_TAG_ID, "NA");
         String userToken = sharedPref.getString(User.SHARED_PREF_TAG_TOKEN, "NA");
+        userFirstName = sharedPref.getString(User.SHARED_PREF_TAG_FIRST_NAME, "NA");
+        userLastName = sharedPref.getString(User.SHARED_PREF_TAG_LAST_NAME, "NA");
 
         Log.d("AllotApi", userToken);
 
@@ -140,22 +143,35 @@ public class GroupActivity extends AppCompatActivity implements FetchGroupsRespo
 
     }
 
-    public void getNevigationBar(){
+    public void getNevigationBar() {
         /**
          * Navigation bar
          */
+        SharedPreferences sharedPref = getSharedPreferences(User.SHARED_PREF_GROUP, MODE_PRIVATE);
+
+        userFirstName = sharedPref.getString(User.SHARED_PREF_TAG_FIRST_NAME, "NA");
+        userLastName = sharedPref.getString(User.SHARED_PREF_TAG_LAST_NAME, "NA");
+        userEmailId = sharedPref.getString(User.SHARED_PREF_TAG_EMAIL, "NA");
+
         userNameMenu = (TextView) findViewById(R.id.userNameMenu);
-        userNameMenu.setText("Prachi Sharma");
+        userNameMenu.setText(userFirstName+" "+userLastName);
+
+        userEmail = (TextView) findViewById(R.id.userEmailId);
+        userEmail.setText(userEmailId);
 
         settingsButton = (Button) findViewById(R.id.settingsButton);
         settingsButton.setText("Settings");
         settingsButton.setTextColor(Color.BLACK);
+        settingsButton.setBackgroundColor(Color.WHITE);
 
         logout = (Button) findViewById(R.id.Logout);
         logout.setTextColor(Color.BLACK);
+        logout.setBackgroundColor(Color.WHITE);
 
         groupsButton = (Button) findViewById(R.id.groupsButton);
         groupsButton.setTextColor(Color.BLACK);
+        groupsButton.setBackgroundColor(Color.WHITE);
+        
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         mToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
@@ -180,12 +196,11 @@ public class GroupActivity extends AppCompatActivity implements FetchGroupsRespo
          */
         ArrayList<String> testingGroupButtons = new ArrayList();
 
-        for (Group group: groups) {
+        for (Group group : groups) {
             Log.d("GroupCheck", group.getName());
             testingGroupButtons.add(group.getName());
         }
-//        testingGroupButtons.add("Appartment");
-//        testingGroupButtons.add("Office");
+
 
         cardAdapter = new CardAdapter(testingGroupButtons, getApplicationContext(),
                 R.layout.card_group, PlaceActivity.class);
