@@ -1,5 +1,6 @@
 package madcourse.neu.edu.allot.task;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -10,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import madcourse.neu.edu.allot.R;
 import madcourse.neu.edu.allot.place.PlaceActivity;
@@ -18,6 +20,7 @@ public class AddTaskActivity extends AppCompatActivity {
 
     private EditText taskName;
     private EditText description;
+    private EditText location;
     private Button buttonParticipant;
     private Button buttonLocation;
 
@@ -35,6 +38,7 @@ public class AddTaskActivity extends AppCompatActivity {
         description = (EditText) findViewById(R.id.editText_description);
         buttonParticipant = (Button) findViewById(R.id.button_allot);
         buttonLocation = (Button) findViewById(R.id.button_choose_location);
+        location = (EditText) findViewById(R.id.text_location);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -46,6 +50,20 @@ public class AddTaskActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == 1) {
+            if (resultCode == Activity.RESULT_OK) {
+                String nameOfLocation = data.getStringExtra("placename");
+                location.setText(nameOfLocation);
+            }
+            if (resultCode == Activity.RESULT_CANCELED) {
+                //Write your code if there's no result
+            }
+        }
+    }
+
     /**
      * On Choose Location button click.
      *
@@ -53,12 +71,12 @@ public class AddTaskActivity extends AppCompatActivity {
      */
     public void chooseLocation(View view) {
         Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, 1);
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent myIntent = new Intent(getApplicationContext(), PlaceActivity.class);
-        startActivityForResult(myIntent, 0);
+        startActivityForResult(myIntent, 1);
         return true;
 
     }

@@ -75,6 +75,9 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
+        <meta-data
+            android:name="com.google.android.places.API_KEY"
+            android:value="@string/google_places_key" />
 
         <activity
             android:name=".task.MapsActivity"
@@ -98,7 +101,7 @@
         </activity>
         <activity android:name=".group.CreateGroupActivity" />
         <activity android:name=".group.GroupActivity" />
-        <activity android:name=".group.JoinGroupActivity"></activity>
+        <activity android:name=".group.JoinGroupActivity" />
     </application>
 
 </manifest>
