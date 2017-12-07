@@ -112,6 +112,14 @@ public class GroupActivity extends AppCompatActivity implements FetchGroupsRespo
             }
         });
 
+        fabJoinGroup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent JoinGroupActivity = new Intent(GroupActivity.this, JoinGroupActivity.class);
+                startActivity(JoinGroupActivity);
+            }
+        });
+
 
         /**
          * User credentials.
