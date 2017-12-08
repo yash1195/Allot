@@ -1,6 +1,7 @@
 package madcourse.neu.edu.allot.task;
 
 import android.app.IntentService;
+import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -59,7 +60,7 @@ public class GeofenceTransitionsIntentService extends IntentService {
                     triggeringGeofences);
 
             // Send notification and log the transition details.
-            sendNotification(geofenceTransitionDetails);
+            sendNotification(geofenceTransitionDetails, intent);
             Log.i(TAG, geofenceTransitionDetails);
         } else {
             // Log the error.
@@ -94,7 +95,7 @@ public class GeofenceTransitionsIntentService extends IntentService {
      * Posts a notification in the notification bar when a transition is detected.
      * If the user clicks the notification, control goes to the MainActivity.
      */
-    private void sendNotification(String notificationDetails) {
+    private void sendNotification(String notificationDetails, Intent intent) {
         // Get an instance of the Notification manager
         NotificationManager mNotificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
@@ -136,8 +137,9 @@ public class GeofenceTransitionsIntentService extends IntentService {
                 .setLargeIcon(BitmapFactory.decodeResource(getResources(),
                         R.drawable.logo_allot))
                 .setColor(Color.RED)
+                .setDefaults(Notification.DEFAULT_SOUND)
                 .setContentTitle(notificationDetails)
-                .setContentText("Geofence Transition Notification text")
+                .setContentText(intent.getStringExtra("task") + " now!")
                 .setContentIntent(notificationPendingIntent);
 
         // Set the Channel ID for Android O.

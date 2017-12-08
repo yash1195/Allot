@@ -2,10 +2,12 @@ package madcourse.neu.edu.allot.task;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -29,6 +31,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.GeofencingClient;
@@ -40,6 +43,7 @@ import com.google.android.gms.tasks.Task;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import madcourse.neu.edu.allot.BuildConfig;
@@ -153,7 +157,12 @@ public class AddTaskActivity extends AppCompatActivity implements OnCompleteList
     private GeofencingClient geofencingClient;
     private List<Geofence> geofenceList;
 
-
+    /**
+     * Called when user clicks "Add" to create the task.
+     *
+     * @param item item
+     * @return false, blocks creating a task
+     */
     @SuppressWarnings("MissingPermission")
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -232,6 +241,9 @@ public class AddTaskActivity extends AppCompatActivity implements OnCompleteList
             dialog.show();
             return false;
         }
+        if (!scheduleAlarm()) {
+            return false;
+        }
         return true;
     }
 
@@ -245,6 +257,29 @@ public class AddTaskActivity extends AppCompatActivity implements OnCompleteList
                 // Access user with checkbox.user
             }
         }
+    }
+
+    public boolean scheduleAlarm() {
+        Calendar calendar = Calendar.getInstance();
+
+        if (calendar.get(Calendar.YEAR) > year || calendar.get(Calendar.MONTH) > month ||
+                calendar.get(Calendar.DAY_OF_MONTH) > day || calendar.get(Calendar.HOUR) > hour ||
+                calendar.get(Calendar.MINUTE) > minute) {
+            Toast.makeText(this, "Cannot schedule a task in the past",
+                    Toast.LENGTH_LONG).show();
+            return false;
+        }
+        //TODO: add day, month, hour
+        int min = minute - calendar.get(Calendar.MINUTE);
+        Long time = new GregorianCalendar().getTimeInMillis() + 60 * 1000;
+        Intent intentAlarm = new Intent(this, AlarmBroadcastReceiver.class);
+        intentAlarm.putExtra("task", taskName.getText());
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        //set the alarm for particular time
+        alarmManager.set(AlarmManager.RTC_WAKEUP, time, PendingIntent.getBroadcast(this,
+                1, intentAlarm, PendingIntent.FLAG_UPDATE_CURRENT));
+        Toast.makeText(this, "Alarm Scheduled for ", Toast.LENGTH_LONG).show();
+        return true;
     }
 
     public GeofencingRequest getGeofencingRequest() {
@@ -273,6 +308,7 @@ public class AddTaskActivity extends AppCompatActivity implements OnCompleteList
             return mGeofencePendingIntent;
         }
         Intent intent = new Intent(this, GeofenceTransitionsIntentService.class);
+        intent.putExtra("task", taskName.getText().toString());
         return PendingIntent.getService(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
