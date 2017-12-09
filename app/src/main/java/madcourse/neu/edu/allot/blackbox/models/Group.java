@@ -1,5 +1,6 @@
 package madcourse.neu.edu.allot.blackbox.models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,7 +8,7 @@ import java.util.List;
  * Created by zeko on 12/6/17.
  */
 
-public class Group {
+public class Group implements Serializable {
 
     private String name = "";
     private String code = "";

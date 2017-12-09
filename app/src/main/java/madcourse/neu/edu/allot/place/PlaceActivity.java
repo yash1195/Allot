@@ -1,6 +1,7 @@
 package madcourse.neu.edu.allot.place;
 
 import android.content.Intent;
+import android.os.Binder;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import madcourse.neu.edu.allot.R;
+import madcourse.neu.edu.allot.blackbox.models.Group;
 import madcourse.neu.edu.allot.task.AddTaskActivity;
 
 public class PlaceActivity extends AppCompatActivity {
@@ -26,13 +28,31 @@ public class PlaceActivity extends AppCompatActivity {
     private ViewPager viewPager;
     private String place;
 
+    // group data
+    static Bundle groupDataBundle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_place);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        place = getIntent().getStringExtra("place");
+
+        Bundle passedData = getIntent().getExtras();
+
+        if(passedData.get("groupData") != null) {
+
+            // passed data
+            place = getIntent().getStringExtra("place");
+
+
+            Group groupData = (Group) passedData.get("groupData");
+            groupDataBundle = new Bundle();
+            groupDataBundle.putSerializable("groupData", groupData);
+        }
+
+
+
         toolbar.setTitle(place);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -63,9 +83,17 @@ public class PlaceActivity extends AppCompatActivity {
      * @param pager view pager
      */
     private void setupViewPager(ViewPager pager) {
+
         SectionsPagerAdapter adapter = new SectionsPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new DashboardFragment(), "Dashboard");
-        adapter.addFragment(new TaskFragment(), "Tasks");
+
+        Fragment dashBoardFragment = new DashboardFragment();
+        dashBoardFragment.setArguments(groupDataBundle);
+
+        Fragment tasksSectionFragment = new TaskFragment();
+        tasksSectionFragment.setArguments(groupDataBundle);
+
+        adapter.addFragment(dashBoardFragment, "Dashboard");
+        adapter.addFragment(tasksSectionFragment, "Tasks");
         viewPager.setAdapter(adapter);
     }
 

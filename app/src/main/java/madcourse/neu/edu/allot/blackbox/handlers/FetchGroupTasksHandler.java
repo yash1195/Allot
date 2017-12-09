@@ -11,17 +11,17 @@ import java.util.List;
 import cz.msebera.android.httpclient.Header;
 import madcourse.neu.edu.allot.blackbox.api.AllotApi;
 import madcourse.neu.edu.allot.blackbox.models.Group;
-import madcourse.neu.edu.allot.blackbox.models.User;
+import madcourse.neu.edu.allot.blackbox.models.Task;
 import madcourse.neu.edu.allot.blackbox.responders.FetchGroupsResponder;
-import madcourse.neu.edu.allot.blackbox.responders.LoginResponder;
+import madcourse.neu.edu.allot.blackbox.responders.FetchTasksResponder;
+import madcourse.neu.edu.allot.blackbox.response.FetchTasksResponse;
 import madcourse.neu.edu.allot.blackbox.response.FetchUserGroupsResponse;
-import madcourse.neu.edu.allot.blackbox.response.LoginResponse;
 
 /**
- * Created by zeko on 12/6/17.
+ * Created by zeko on 12/7/17.
  */
 
-public class FetchGroupsHandler {
+public class FetchGroupTasksHandler {
 
     private static RequestParams params;
     private static AsyncHttpClient client;
@@ -30,39 +30,40 @@ public class FetchGroupsHandler {
         client = new AsyncHttpClient();
     }
 
-    public FetchGroupsHandler() {
+    public FetchGroupTasksHandler() {}
 
-
-    }
-
-    public static void doFetch(final FetchGroupsResponder responder, String id, String token) {
+    public static void doFetch(final FetchTasksResponder responder, String id, String token, String groupCode) {
 
         params = new RequestParams();
         params.put("id", id);
         params.put("token", token);
+        params.put("groupCode", groupCode);
 
-        client.post(AllotApi.FETCH_USER_GROUPS, params, new TextHttpResponseHandler() {
+        client.post(AllotApi.FETCH_GROUP_TASKS, params, new TextHttpResponseHandler() {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
 
-                responder.onFailedGroupsFetch("Error");
+                responder.onFailedTaskFetch("Unable to fetch");
             }
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
 
-                FetchUserGroupsResponse resp = FetchUserGroupsResponse.parseJson(responseString);
+                FetchTasksResponse resp = FetchTasksResponse.parseJson(responseString);
 
                 int status = resp.getStatus();
 
                 if (status == 200) {
 
-                    List<Group> groups = resp.getGroups();
-                    responder.onSuccessfullGroupsFetch(groups);
+                    List<Task> tasks = resp.getTasks();
+
+                    Log.d("AllotApi", "fetched tasks");
+                    Log.d("AllotApi", tasks.toString());
+                    responder.onSuccessFulTaskFetch(tasks);
 
                 } else {
-                    responder.onFailedGroupsFetch("Server Error");
+                    responder.onFailedTaskFetch("Server Error");
                 }
             }
         });

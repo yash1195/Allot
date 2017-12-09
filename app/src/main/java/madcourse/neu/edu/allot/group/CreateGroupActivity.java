@@ -26,17 +26,11 @@ public class CreateGroupActivity extends AppCompatActivity implements CreateGrou
     Button createGroupButton;
     EditText createGroupEditText;
 
-    private DrawerLayout drawerLayout;
-    private ActionBarDrawerToggle mToggle;
-    TextView userNameMenu;
-    TextView settingsButton;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_group);
 
-        final int groupCode = 1234;
 
         createGroupButton = (Button) findViewById(R.id.createGroupButton);
         createGroupEditText = (EditText) findViewById(R.id.creatGroupEdittext);
@@ -62,8 +56,6 @@ public class CreateGroupActivity extends AppCompatActivity implements CreateGrou
                     String userToken = sharedPref.getString(User.SHARED_PREF_TAG_TOKEN, "NA");
 
                     CreateGroupHandler.doCreate(CreateGroupActivity.this , userId, userToken, groupName);
-
-
                 }
             }
         });
@@ -90,7 +82,8 @@ public class CreateGroupActivity extends AppCompatActivity implements CreateGrou
     public void onFailedCreateGroup(String msg) {
 
         AlertDialog.Builder createGroupAlert = new AlertDialog.Builder(CreateGroupActivity.this);
-        createGroupAlert.setMessage("Unable to Create Group: " + msg)
+        createGroupAlert
+                .setMessage("Unable to Create Group: " + msg)
                 .setCancelable(false)
                 .setPositiveButton("OKAY", new DialogInterface.OnClickListener() {
                     @Override
