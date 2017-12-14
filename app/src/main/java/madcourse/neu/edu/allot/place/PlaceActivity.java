@@ -53,8 +53,6 @@ public class PlaceActivity extends AppCompatActivity {
             groupDataBundle.putSerializable("groupData", groupData);
         }
 
-
-
         toolbar.setTitle(place);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

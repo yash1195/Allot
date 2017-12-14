@@ -10,5 +10,4 @@ public class CheckboxModel {
         this.user = user;
         checked = false;
     }
-
 }

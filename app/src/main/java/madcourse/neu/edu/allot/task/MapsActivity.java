@@ -7,7 +7,6 @@ import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
-import android.nfc.Tag;
 import android.os.Build;
 import android.support.v4.app.ActivityCompat;
 import android.os.Bundle;
@@ -16,7 +15,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -48,6 +46,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         com.google.android.gms.location.LocationListener {
 
     private static final String TAG = "NayTag";
+    private static final int BACK_BUTTON = 16908332;
     private GoogleMap mMap;
     private GoogleApiClient mGoogleApiClient;
     private Location mCurrentLocation;
@@ -112,12 +111,19 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_name) {
+            if (mCurrentLocation == null) {
+                Toast.makeText(this, "Select a location", Toast.LENGTH_LONG).show();
+                return false;
+            }
             Intent returnIntent = getIntent();
             LatLng latLng = new LatLng(mCurrentLocation.getLatitude(),
                     mCurrentLocation.getLongitude());
             returnIntent.putExtra("placename", getAddressFromLatlng(latLng));
             returnIntent.putExtra("latlng", latLng);
             setResult(Activity.RESULT_OK, returnIntent);
+            finish();
+            return true;
+        } else if (id == BACK_BUTTON) {
             finish();
             return true;
         }

@@ -57,10 +57,12 @@ import madcourse.neu.edu.allot.blackbox.models.User;
 public class AddTaskActivity extends AppCompatActivity implements OnCompleteListener<Void>,
         DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
+    private static final int BACK_BUTTON = 16908332;
     private EditText taskNameView;
     private EditText descriptionView;
     private EditText locationView;
     private EditText setTimeView;
+    private EditText radiusView;
     private Button buttonParticipant;
     private Button buttonLocation;
     private ListView allotList;
@@ -96,12 +98,12 @@ public class AddTaskActivity extends AppCompatActivity implements OnCompleteList
 
         geofenceList = new ArrayList<>();
 
-
         // task details
         taskNameView = (EditText) findViewById(R.id.editText_taskname);
         descriptionView = (EditText) findViewById(R.id.editText_description);
         locationView = (EditText) findViewById(R.id.text_location);
         setTimeView = (EditText) findViewById(R.id.editText_set_time);
+        radiusView = (EditText) findViewById(R.id.editText_radius);
         buttonLocation = (Button) findViewById(R.id.button_choose_location);
         buttonTime = (Button) findViewById(R.id.button_set_time);
         buttonTime.setOnClickListener(new View.OnClickListener() {
@@ -122,21 +124,9 @@ public class AddTaskActivity extends AppCompatActivity implements OnCompleteList
         // this way, we can know which participants were selected when the task is created.
         users = new ArrayList<>();
 
-        for (User member: groupData.getMembers()) {
-
+        for (User member : groupData.getMembers()) {
             users.add(new CheckboxModel(member));
         }
-
-        // old code
-//        User user = new User();
-//        user.setFirstName("Nay");
-//        users.add(new CheckboxModel(user));
-//        User user1 = new User();
-//        user1.setFirstName("Yash");
-//        users.add(new CheckboxModel(user1));
-//        User user3 = new User();
-//        user3.setFirstName("Prachi");
-//        users.add(new CheckboxModel(user3));
 
         checkboxAdapter = new CheckboxAdapter(users, this, R.layout.card_checkbox_participant);
         allotList.setAdapter(checkboxAdapter);
@@ -176,7 +166,7 @@ public class AddTaskActivity extends AppCompatActivity implements OnCompleteList
 
     private static final String TAG = "ADDTASK:";
     private static final int REQUEST_PERMISSIONS_REQUEST_CODE = 99;
-    private static final float GEOFENCE_RADIUS_IN_METERS = 1609;
+    private static float GEOFENCE_RADIUS_IN_METERS = 50;
     private static final long GEOFENCE_EXPIRATION_IN_MILLISECONDS = 12 * 60 * 60 * 1000;
     private static final String GEOFENCES_ADDED_KEY = "com.google.android.gms.locationView.Geofence";
     private PendingIntent mGeofencePendingIntent;
@@ -201,6 +191,7 @@ public class AddTaskActivity extends AppCompatActivity implements OnCompleteList
                 return false;
             }
             if (selectedLatLng != null) {
+                GEOFENCE_RADIUS_IN_METERS = Float.parseFloat(radiusView.getText().toString());
                 geofenceList.add(new Geofence.Builder()
                         .setRequestId(nameOfLocation)
                         .setCircularRegion(
@@ -209,10 +200,7 @@ public class AddTaskActivity extends AppCompatActivity implements OnCompleteList
                                 GEOFENCE_RADIUS_IN_METERS
                         )
                         .setExpirationDuration(GEOFENCE_EXPIRATION_IN_MILLISECONDS)
-                        .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER |
-                                Geofence.GEOFENCE_TRANSITION_EXIT |
-                                Geofence.GEOFENCE_TRANSITION_DWELL)
-                        .setLoiteringDelay(15000)
+                        .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER)
                         .build());
                 geofencingClient = LocationServices.getGeofencingClient(this);
 
@@ -222,6 +210,9 @@ public class AddTaskActivity extends AppCompatActivity implements OnCompleteList
 
             createTask();
 
+            finish();
+            return true;
+        }else if (id == BACK_BUTTON) {
             finish();
             return true;
         }
@@ -234,49 +225,60 @@ public class AddTaskActivity extends AppCompatActivity implements OnCompleteList
      * @return true if all requirements are satisfied
      */
     public boolean checkRequirements() {
-
         if (!checkPermissions()) {
             requestPermissions();
             return false;
         }
-
-        AlertDialog.Builder builder;
-
         // check if Task title is empty
         if (taskNameView.getText().toString().trim().isEmpty()) {
-
-            builder = new AlertDialog.Builder(this);
-            builder.setTitle("Incomplete");
-            builder.setMessage("Task name required to create task");
-            builder.setCancelable(false);
-            builder.setPositiveButton(R.string.label_ok, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-
-                }
-            });
-            final Dialog dialog = builder.create();
-            dialog.show();
+            showDialog("Incomplete", "Task name is required");
             return false;
         }
+        // check if Time is provided
         if (setTimeView.getText().toString().trim().isEmpty()) {
-            builder = new AlertDialog.Builder(this);
-            builder.setTitle("Incomplete");
-            builder.setMessage("Time required to create task");
-            builder.setCancelable(false);
-            builder.setPositiveButton(R.string.label_ok, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                }
-            });
-            final Dialog dialog = builder.create();
-            dialog.show();
+            showDialog("Incomplete", "Time required to create task");
             return false;
         }
+        // check if at least one participant is selected
+        if (!participantSelected()) {
+            showDialog("Incomplete", "Allot task to at least one participant");
+            return false;
+        }
+        // check if the task is scheduled at a valid time
         if (!scheduleAlarm()) {
             return false;
         }
         return true;
+    }
+
+    public boolean participantSelected() {
+        for (CheckboxModel user : users) {
+            if (user.checked) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Shows a dialog with the provided title and message.
+     *
+     * @param title   title of the dialog
+     * @param message dialog message
+     */
+    public void showDialog(String title, String message) {
+        AlertDialog.Builder builder;
+        builder = new AlertDialog.Builder(this);
+        builder.setTitle(title);
+        builder.setMessage(message);
+        builder.setCancelable(false);
+        builder.setPositiveButton(R.string.label_ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+            }
+        });
+        final Dialog dialog = builder.create();
+        dialog.show();
     }
 
     /**
@@ -351,9 +353,7 @@ public class AddTaskActivity extends AppCompatActivity implements OnCompleteList
     public GeofencingRequest getGeofencingRequest() {
         GeofencingRequest.Builder builder = new GeofencingRequest.Builder();
 
-        builder.setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER |
-                GeofencingRequest.INITIAL_TRIGGER_EXIT |
-                GeofencingRequest.INITIAL_TRIGGER_DWELL);
+        builder.setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER);
 
         // Add the geofences to be monitored by geofencing service.
         builder.addGeofences(geofenceList);

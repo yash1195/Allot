@@ -11,8 +11,6 @@ import madcourse.neu.edu.allot.R;
 
 public class PopUpActivity extends AppCompatActivity {
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
