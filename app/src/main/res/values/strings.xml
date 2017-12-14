@@ -54,4 +54,7 @@
     <string name="hint_set_time">Set a time</string>
     <string name="button_set_time2">Choose Time</string>
     <string name="label_ok">OK</string>
+    <string name="label_remind">Remind within</string>
+    <string name="default_radiu">50</string>
+    <string name="text_meters">meters</string>
 </resources>

@@ -56,6 +56,7 @@ public class AddTaskActivity extends AppCompatActivity implements OnCompleteList
     private EditText taskName;
     private EditText description;
     private EditText location;
+    private EditText radius;
     private EditText setTime;
     private Button buttonParticipant;
     private Button buttonLocation;
@@ -83,6 +84,7 @@ public class AddTaskActivity extends AppCompatActivity implements OnCompleteList
         taskName = (EditText) findViewById(R.id.editText_taskname);
         description = (EditText) findViewById(R.id.editText_description);
         location = (EditText) findViewById(R.id.text_location);
+        radius = (EditText) findViewById(R.id.editText_radius);
         setTime = (EditText) findViewById(R.id.editText_set_time);
         buttonLocation = (Button) findViewById(R.id.button_choose_location);
         buttonTime = (Button) findViewById(R.id.button_set_time);
@@ -150,7 +152,7 @@ public class AddTaskActivity extends AppCompatActivity implements OnCompleteList
 
     private static final String TAG = "ADDTASK:";
     private static final int REQUEST_PERMISSIONS_REQUEST_CODE = 99;
-    private static final float GEOFENCE_RADIUS_IN_METERS = 1609;
+    private static float GEOFENCE_RADIUS_IN_METERS = 50;
     private static final long GEOFENCE_EXPIRATION_IN_MILLISECONDS = 12 * 60 * 60 * 1000;
     private static final String GEOFENCES_ADDED_KEY = "com.google.android.gms.location.Geofence";
     private PendingIntent mGeofencePendingIntent;
@@ -173,6 +175,7 @@ public class AddTaskActivity extends AppCompatActivity implements OnCompleteList
                 return false;
             }
             if (selectedLatLng != null) {
+                GEOFENCE_RADIUS_IN_METERS = Float.parseFloat(radius.getText().toString());
                 geofenceList.add(new Geofence.Builder()
                         .setRequestId(nameOfLocation)
                         .setCircularRegion(
