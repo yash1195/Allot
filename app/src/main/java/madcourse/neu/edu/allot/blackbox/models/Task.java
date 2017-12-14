@@ -19,6 +19,7 @@ public class Task implements Serializable {
     private String groupCode = "";
     private boolean isLocationEnabled = false;
     private boolean isDone = false;
+    private int repetition = 0;
     List<User> participants;
     List<User> creator;
 
@@ -93,6 +94,13 @@ public class Task implements Serializable {
     }
     public void setIsDone(boolean isDone) {
         this.isDone = isDone;
+    }
+
+    public int getRepetition() {
+        return repetition;
+    }
+    public void setRepetition(int repetition) {
+        this.repetition = repetition;
     }
 
     public List<User> getParticipants() {

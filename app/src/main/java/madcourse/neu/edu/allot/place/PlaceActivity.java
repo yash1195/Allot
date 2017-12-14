@@ -13,6 +13,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import java.util.ArrayList;
@@ -27,6 +28,7 @@ public class PlaceActivity extends AppCompatActivity {
     private SectionsPagerAdapter sectionsPagerAdapter;
     private ViewPager viewPager;
     private String place;
+    private Group groupData;
 
     // group data
     static Bundle groupDataBundle;
@@ -46,12 +48,10 @@ public class PlaceActivity extends AppCompatActivity {
             place = getIntent().getStringExtra("place");
 
 
-            Group groupData = (Group) passedData.get("groupData");
+            groupData = (Group) passedData.get("groupData");
             groupDataBundle = new Bundle();
             groupDataBundle.putSerializable("groupData", groupData);
         }
-
-
 
         toolbar.setTitle(place);
         setSupportActionBar(toolbar);
@@ -70,7 +70,13 @@ public class PlaceActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), AddTaskActivity.class);
+
+                // place info
                 intent.putExtra("place", place);
+
+                // group data to be passed
+                intent.putExtra("groupData", groupData);
+                Log.d("PlaceActivity", groupData.toString());
                 startActivity(intent);
             }
         });

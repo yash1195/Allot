@@ -10,6 +10,7 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -43,49 +44,66 @@ import com.google.android.gms.tasks.Task;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
 import madcourse.neu.edu.allot.BuildConfig;
 import madcourse.neu.edu.allot.R;
+import madcourse.neu.edu.allot.blackbox.handlers.CreateTaskHandler;
+import madcourse.neu.edu.allot.blackbox.models.Group;
 import madcourse.neu.edu.allot.blackbox.models.User;
 
 public class AddTaskActivity extends AppCompatActivity implements OnCompleteListener<Void>,
         DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
-    private EditText taskName;
-    private EditText description;
-    private EditText location;
-    private EditText radius;
-    private EditText setTime;
+    private static final int BACK_BUTTON = 16908332;
+    private EditText taskNameView;
+    private EditText descriptionView;
+    private EditText locationView;
+    private EditText setTimeView;
+    private EditText radiusView;
     private Button buttonParticipant;
     private Button buttonLocation;
     private ListView allotList;
     private Button buttonTime;
     private List<CheckboxModel> users;
     private CheckboxAdapter checkboxAdapter;
+
+    // Task date-time data
     private int day, month, year, hour, minute;
 
     private LatLng selectedLatLng;
-    private String nameOfLocation;
+    private String nameOfLocation = "";
+
+    // group data
+    private Group groupData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_task);
 
+
+        // retrieve group data
+        groupData = (Group) getIntent().getExtras().get("groupData");
+
+        // geo service
         selectedLatLng = null;
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(getIntent().getStringExtra("place"));
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         geofenceList = new ArrayList<>();
 
-        taskName = (EditText) findViewById(R.id.editText_taskname);
-        description = (EditText) findViewById(R.id.editText_description);
-        location = (EditText) findViewById(R.id.text_location);
-        radius = (EditText) findViewById(R.id.editText_radius);
-        setTime = (EditText) findViewById(R.id.editText_set_time);
+        // task details
+        taskNameView = (EditText) findViewById(R.id.editText_taskname);
+        descriptionView = (EditText) findViewById(R.id.editText_description);
+        locationView = (EditText) findViewById(R.id.text_location);
+        setTimeView = (EditText) findViewById(R.id.editText_set_time);
+        radiusView = (EditText) findViewById(R.id.editText_radius);
         buttonLocation = (Button) findViewById(R.id.button_choose_location);
         buttonTime = (Button) findViewById(R.id.button_set_time);
         buttonTime.setOnClickListener(new View.OnClickListener() {
@@ -103,17 +121,13 @@ public class AddTaskActivity extends AppCompatActivity implements OnCompleteList
 
         // This is where you pass the list of participants in the group
         // I am passing in an object called CheckboxModel which contains a User instance and a boolean
-        // this way, we can know which particpants were selected when the task is created.
+        // this way, we can know which participants were selected when the task is created.
         users = new ArrayList<>();
-        User user = new User();
-        user.setFirstName("Nay");
-        users.add(new CheckboxModel(user));
-        User user1 = new User();
-        user1.setFirstName("Yash");
-        users.add(new CheckboxModel(user1));
-        User user3 = new User();
-        user3.setFirstName("Prachi");
-        users.add(new CheckboxModel(user3));
+
+        for (User member : groupData.getMembers()) {
+            users.add(new CheckboxModel(member));
+        }
+
         checkboxAdapter = new CheckboxAdapter(users, this, R.layout.card_checkbox_participant);
         allotList.setAdapter(checkboxAdapter);
     }
@@ -126,7 +140,7 @@ public class AddTaskActivity extends AppCompatActivity implements OnCompleteList
                 Bundle bundle = data.getExtras();
                 nameOfLocation = bundle.get("placename").toString();
                 selectedLatLng = (LatLng) bundle.get("latlng");
-                location.setText(nameOfLocation);
+                locationView.setText(nameOfLocation);
             }
             if (resultCode == Activity.RESULT_CANCELED) {
             }
@@ -154,7 +168,7 @@ public class AddTaskActivity extends AppCompatActivity implements OnCompleteList
     private static final int REQUEST_PERMISSIONS_REQUEST_CODE = 99;
     private static float GEOFENCE_RADIUS_IN_METERS = 50;
     private static final long GEOFENCE_EXPIRATION_IN_MILLISECONDS = 12 * 60 * 60 * 1000;
-    private static final String GEOFENCES_ADDED_KEY = "com.google.android.gms.location.Geofence";
+    private static final String GEOFENCES_ADDED_KEY = "com.google.android.gms.locationView.Geofence";
     private PendingIntent mGeofencePendingIntent;
     private GeofencingClient geofencingClient;
     private List<Geofence> geofenceList;
@@ -168,6 +182,8 @@ public class AddTaskActivity extends AppCompatActivity implements OnCompleteList
     @SuppressWarnings("MissingPermission")
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
+
         int id = item.getItemId();
         if (id == R.id.action_add) {
 
@@ -175,7 +191,7 @@ public class AddTaskActivity extends AppCompatActivity implements OnCompleteList
                 return false;
             }
             if (selectedLatLng != null) {
-                GEOFENCE_RADIUS_IN_METERS = Float.parseFloat(radius.getText().toString());
+                GEOFENCE_RADIUS_IN_METERS = Float.parseFloat(radiusView.getText().toString());
                 geofenceList.add(new Geofence.Builder()
                         .setRequestId(nameOfLocation)
                         .setCircularRegion(
@@ -184,10 +200,7 @@ public class AddTaskActivity extends AppCompatActivity implements OnCompleteList
                                 GEOFENCE_RADIUS_IN_METERS
                         )
                         .setExpirationDuration(GEOFENCE_EXPIRATION_IN_MILLISECONDS)
-                        .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER |
-                                Geofence.GEOFENCE_TRANSITION_EXIT |
-                                Geofence.GEOFENCE_TRANSITION_DWELL)
-                        .setLoiteringDelay(15000)
+                        .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER)
                         .build());
                 geofencingClient = LocationServices.getGeofencingClient(this);
 
@@ -195,8 +208,11 @@ public class AddTaskActivity extends AppCompatActivity implements OnCompleteList
                         .addOnCompleteListener(this);
             }
 
-            // TODO: create a task object and store
+            createTask();
 
+            finish();
+            return true;
+        }else if (id == BACK_BUTTON) {
             finish();
             return true;
         }
@@ -213,56 +229,105 @@ public class AddTaskActivity extends AppCompatActivity implements OnCompleteList
             requestPermissions();
             return false;
         }
-        AlertDialog.Builder builder;
-        if (taskName.getText().toString().trim().isEmpty()) {
-            // TODO: show dialog that says TaskName required.
-            builder = new AlertDialog.Builder(this);
-            builder.setTitle("Incomplete");
-            builder.setMessage("Task name required to create task");
-            builder.setCancelable(false);
-            builder.setPositiveButton(R.string.label_ok, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-
-                }
-            });
-            final Dialog dialog = builder.create();
-            dialog.show();
+        // check if Task title is empty
+        if (taskNameView.getText().toString().trim().isEmpty()) {
+            showDialog("Incomplete", "Task name is required");
             return false;
         }
-        if (setTime.getText().toString().trim().isEmpty()) {
-            builder = new AlertDialog.Builder(this);
-            builder.setTitle("Incomplete");
-            builder.setMessage("Time required to create task");
-            builder.setCancelable(false);
-            builder.setPositiveButton(R.string.label_ok, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                }
-            });
-            final Dialog dialog = builder.create();
-            dialog.show();
+        // check if Time is provided
+        if (setTimeView.getText().toString().trim().isEmpty()) {
+            showDialog("Incomplete", "Time required to create task");
             return false;
         }
+        // check if at least one participant is selected
+        if (!participantSelected()) {
+            showDialog("Incomplete", "Allot task to at least one participant");
+            return false;
+        }
+        // check if the task is scheduled at a valid time
         if (!scheduleAlarm()) {
             return false;
         }
         return true;
     }
 
+    public boolean participantSelected() {
+        for (CheckboxModel user : users) {
+            if (user.checked) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Shows a dialog with the provided title and message.
+     *
+     * @param title   title of the dialog
+     * @param message dialog message
+     */
+    public void showDialog(String title, String message) {
+        AlertDialog.Builder builder;
+        builder = new AlertDialog.Builder(this);
+        builder.setTitle(title);
+        builder.setMessage(message);
+        builder.setCancelable(false);
+        builder.setPositiveButton(R.string.label_ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+            }
+        });
+        final Dialog dialog = builder.create();
+        dialog.show();
+    }
+
     /**
      * Creates a task object with user inputs.
      */
     public void createTask() {
-        for (CheckboxModel checkbox : users) {
-            if (checkbox.checked) {
-                // TODO: include this user as a participant for the task
-                // Access user with checkbox.user
+
+        madcourse.neu.edu.allot.blackbox.models.Task createdTask = new madcourse.neu.edu.allot.blackbox.models.Task();
+
+        // task participants
+        List<User> participants = new ArrayList<>();
+        for (CheckboxModel checkOption : users) {
+            if (checkOption.checked) {
+                participants.add(checkOption.user);
             }
         }
+        createdTask.setParticipants(participants);
+
+        // title
+        createdTask.setTitle(taskNameView.getText().toString());
+
+        // description
+        createdTask.setDescription(descriptionView.getText().toString());
+
+        // location
+        createdTask.setLatitude(selectedLatLng.latitude);
+        createdTask.setLongitude(selectedLatLng.longitude);
+        if (nameOfLocation.length() != 0) {
+            createdTask.setIsLocationEnabled(true);
+        }
+
+        // time
+        Date taskDateTime = new Date(year, month, day, hour, minute);
+        createdTask.setTime(Long.toString(taskDateTime.getTime()));
+
+        // group code
+        createdTask.setGroupCode(groupData.getCode());
+
+        // requestor id-token
+        SharedPreferences sharedPref = getSharedPreferences(User.SHARED_PREF_GROUP, MODE_PRIVATE);
+        String requestorId = sharedPref.getString(User.SHARED_PREF_TAG_ID, "NA");
+        String requestorToken = sharedPref.getString(User.SHARED_PREF_TAG_TOKEN, "NA");
+
+        CreateTaskHandler.createTask(createdTask, requestorId, requestorToken);
+
     }
 
     public boolean scheduleAlarm() {
+
         Calendar calendar = Calendar.getInstance();
 
         if (calendar.get(Calendar.YEAR) > year || calendar.get(Calendar.MONTH) > month ||
@@ -276,7 +341,7 @@ public class AddTaskActivity extends AppCompatActivity implements OnCompleteList
         int min = minute - calendar.get(Calendar.MINUTE);
         Long time = new GregorianCalendar().getTimeInMillis() + 60 * 1000;
         Intent intentAlarm = new Intent(this, AlarmBroadcastReceiver.class);
-        intentAlarm.putExtra("task", taskName.getText());
+        intentAlarm.putExtra("task", taskNameView.getText());
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         //set the alarm for particular time
         alarmManager.set(AlarmManager.RTC_WAKEUP, time, PendingIntent.getBroadcast(this,
@@ -288,9 +353,7 @@ public class AddTaskActivity extends AppCompatActivity implements OnCompleteList
     public GeofencingRequest getGeofencingRequest() {
         GeofencingRequest.Builder builder = new GeofencingRequest.Builder();
 
-        builder.setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER |
-                GeofencingRequest.INITIAL_TRIGGER_EXIT |
-                GeofencingRequest.INITIAL_TRIGGER_DWELL);
+        builder.setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER);
 
         // Add the geofences to be monitored by geofencing service.
         builder.addGeofences(geofenceList);
@@ -311,7 +374,7 @@ public class AddTaskActivity extends AppCompatActivity implements OnCompleteList
             return mGeofencePendingIntent;
         }
         Intent intent = new Intent(this, GeofenceTransitionsIntentService.class);
-        intent.putExtra("task", taskName.getText().toString());
+        intent.putExtra("task", taskNameView.getText().toString());
         return PendingIntent.getService(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
@@ -436,6 +499,6 @@ public class AddTaskActivity extends AppCompatActivity implements OnCompleteList
     public void onTimeSet(TimePicker timePicker, int i, int i1) {
         hour = i;
         minute = i1;
-        setTime.setText(i + ":" + i1 + " on " + month + "/" + day + "/" + year);
+        setTimeView.setText(i + ":" + i1 + " on " + month + "/" + day + "/" + year);
     }
 }

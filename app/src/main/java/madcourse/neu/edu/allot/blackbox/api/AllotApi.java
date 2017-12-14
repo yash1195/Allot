@@ -25,4 +25,10 @@ public class AllotApi {
 
     // get group tasks
     public static final String FETCH_GROUP_TASKS = BASE_URL + "task/getGroupTasks";
+
+    // create a task
+    public static final String CREATE_TASK = BASE_URL + "task/create";
+
+    // mark task as done
+    public static final String MARK_TASK_AS_DONE = BASE_URL + "task/markAsDone";
 }
