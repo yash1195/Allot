@@ -13,6 +13,7 @@ public class User implements Serializable {
     public static final String SHARED_PREF_TAG_EMAIL = "LOGGED_IN_USER_EMAIL";
     public static final String SHARED_PREF_TAG_TOKEN = "LOGGED_IN_USER_TOKEN";
     public static final String SHARED_PREF_TAG_ID = "LOGGED_IN_USER_ID";
+    public static final String SHARED_PREF_TAG_DEVICE_ID = "LOGGED_IN_DEVICE_TOKEN";
 
     private String firstName = "";
     private String lastName = "";

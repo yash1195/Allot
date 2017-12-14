@@ -42,6 +42,10 @@ public class RegisterActivity extends AppCompatActivity implements RegisterRespo
         final EditText emailView = (EditText) findViewById(R.id.emailRegistration);
         final EditText passwordView = (EditText) findViewById(R.id.passwordRegistration);
 
+        // android device id
+        SharedPreferences sharedPref = getSharedPreferences(User.SHARED_PREF_GROUP, MODE_PRIVATE);
+        final String androidDeviceId = sharedPref.getString(User.SHARED_PREF_TAG_DEVICE_ID, "NA");
+
 
         // register
         Button userRegisterBtn = (Button) findViewById(R.id.register_user_btn);
@@ -57,7 +61,8 @@ public class RegisterActivity extends AppCompatActivity implements RegisterRespo
                         emailView.getText().toString(),
                         passwordView.getText().toString(),
                         firstNameView.getText().toString(),
-                        lastNameView.getText().toString());
+                        lastNameView.getText().toString(),
+                        androidDeviceId);
             }
         });
 

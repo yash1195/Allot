@@ -1,5 +1,6 @@
 package madcourse.neu.edu.allot.blackbox.handlers;
 
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.loopj.android.http.AsyncHttpClient;
@@ -12,6 +13,8 @@ import madcourse.neu.edu.allot.blackbox.api.AllotApi;
 import madcourse.neu.edu.allot.blackbox.models.User;
 import madcourse.neu.edu.allot.blackbox.responders.LoginResponder;
 import madcourse.neu.edu.allot.blackbox.response.LoginResponse;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by zeko on 11/28/17.
@@ -30,11 +33,15 @@ public class LoginHandler {
 
     }
 
-    public static void doLogin(final LoginResponder responder, String email, String password) {
+    public static void doLogin(final LoginResponder responder, String email, String password, String androidDeviceId) {
 
         params = new RequestParams();
         params.put("email", email);
         params.put("password", password);
+
+        // android device id
+
+        params.put("androidDeviceId", androidDeviceId);
 
         client.post(AllotApi.LOGIN_URL, params, new TextHttpResponseHandler() {
             @Override

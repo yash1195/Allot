@@ -6,12 +6,15 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.loopj.android.http.AsyncHttpClient;
 import madcourse.neu.edu.allot.blackbox.handlers.LoginHandler;
 import madcourse.neu.edu.allot.blackbox.models.User;
@@ -34,11 +37,17 @@ public class LoginActivity extends AppCompatActivity implements LoginResponder {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        Log.d("zeko", FirebaseInstanceId.getInstance().getToken().toString());
+
         // instantiate stuff
         client = new AsyncHttpClient();
 
         mEmailView = (EditText) findViewById(R.id.email);
         mPasswordView = (EditText) findViewById(R.id.password);
+
+        // android device id
+        SharedPreferences sharedPref = getSharedPreferences(User.SHARED_PREF_GROUP, MODE_PRIVATE);
+        final String androidDeviceId = sharedPref.getString(User.SHARED_PREF_TAG_DEVICE_ID, "NA");
 
 
         // sign in
@@ -53,7 +62,8 @@ public class LoginActivity extends AppCompatActivity implements LoginResponder {
 
                 LoginHandler.doLogin(LoginActivity.this,
                         mEmailView.getText().toString(),
-                        mPasswordView.getText().toString());
+                        mPasswordView.getText().toString(),
+                        androidDeviceId);
 
             }
         });

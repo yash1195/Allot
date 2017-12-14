@@ -24,16 +24,19 @@ public class RegisterHandler {
     }
 
     public static void doRegister(final RegisterResponder responder,
-                                              String email,
-                                              String password,
-                                              String firstName,
-                                              String lastName) {
+                                  String email,
+                                  String password,
+                                  String firstName,
+                                  String lastName,
+                                  String androidDeviceId) {
 
         params = new RequestParams();
         params.put("email", email);
         params.put("password", password);
         params.put("firstName", firstName);
         params.put("lastName", lastName);
+
+        params.put("androidDeviceId", androidDeviceId);
 
         client.post(AllotApi.REGISTER_URL, params, new TextHttpResponseHandler() {
             @Override
