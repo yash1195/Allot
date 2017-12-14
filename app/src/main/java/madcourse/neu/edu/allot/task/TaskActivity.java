@@ -1,6 +1,7 @@
 package madcourse.neu.edu.allot.task;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -13,23 +14,33 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import madcourse.neu.edu.allot.R;
+import madcourse.neu.edu.allot.blackbox.handlers.MarkTaskAsDoneHandler;
+import madcourse.neu.edu.allot.blackbox.models.Task;
+import madcourse.neu.edu.allot.blackbox.models.User;
 
 public class TaskActivity extends AppCompatActivity {
 
     LinearLayout taskLinerLayout;
     ArrayList<String> participants = new ArrayList<>();
     Button NudgeButton;
+    Button markAsDone;
+
+    // task data
+    Task taskData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task);
 
-        NudgeButton =(Button) findViewById(R.id.NudgeButton);
+        taskData = (Task) getIntent().getExtras().get("taskData");
 
-        participants.add("Prachi");
-        participants.add("Yash");
-        participants.add("Nay");
+        NudgeButton =(Button) findViewById(R.id.NudgeButton);
+        markAsDone = (Button) findViewById(R.id.MarkButton);
+
+        for (User participant: taskData.getParticipants()) {
+            participants.add(participant.getFirstName() + " " + participant.getLastName());
+        }
 
 
         LinearLayout.LayoutParams paramsTextLable = new LinearLayout.LayoutParams(
@@ -68,6 +79,20 @@ public class TaskActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(TaskActivity.this,PopUpActivity.class));
+            }
+        });
+
+        markAsDone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                // requestor id-token
+                SharedPreferences sharedPref = getSharedPreferences(User.SHARED_PREF_GROUP, MODE_PRIVATE);
+                String requestorId = sharedPref.getString(User.SHARED_PREF_TAG_ID, "NA");
+                String requestorToken = sharedPref.getString(User.SHARED_PREF_TAG_TOKEN, "NA");
+
+                MarkTaskAsDoneHandler.markAsDone(requestorId, requestorToken, taskData.getId());
+                TaskActivity.this.finish();
             }
         });
     }
