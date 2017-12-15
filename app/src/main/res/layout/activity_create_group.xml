@@ -8,15 +8,16 @@
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/colorBackground">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginBottom="332dp"
-            android:fontFamily="serif"
+            android:fontFamily="sans-serif"
             android:gravity="center"
-            android:text="GROUP NAME"
+            android:text="@string/group_name"
             android:textSize="36sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -32,7 +33,7 @@
             android:layout_height="60dp"
             android:layout_marginBottom="240dp"
             android:gravity="center"
-            android:hint="Enter Group Name"
+            android:hint="@string/hint_group_name"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -46,9 +47,9 @@
             android:id="@+id/createGroupButton"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="@color/colorBackground"
-            android:fontFamily="serif"
-            android:text="Create Group"
+            android:background="@color/colorAccent"
+            android:fontFamily="sans-serif"
+            android:text="@string/create_group"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -56,8 +57,7 @@
             app:layout_constraintRight_toRightOf="parent"
             tools:layout_constraintBottom_creator="1"
             tools:layout_constraintLeft_creator="1"
-            tools:layout_constraintRight_creator="1"
-            />
+            tools:layout_constraintRight_creator="1" />
 
     </android.support.constraint.ConstraintLayout>
 
@@ -76,10 +76,10 @@
                 android:id="@+id/userNameMenu"
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
                 android:fontFamily="serif"
-                android:text="PRACHI SHARMA"
+                android:text="@string/username"
                 android:textColor="#292F36"
                 android:textSize="18sp" />
         </LinearLayout>
@@ -89,7 +89,7 @@
             android:id="@+id/settingsButton"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:text="Settings" />
+            android:text="@string/settings" />
 
     </android.support.design.widget.NavigationView>
 

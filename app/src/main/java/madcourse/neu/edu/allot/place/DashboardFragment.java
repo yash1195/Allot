@@ -6,6 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -19,17 +22,20 @@ public class DashboardFragment extends Fragment {
     private ListView participantList;
     private ArrayList<String> list;
     private CardAdapter cardAdapter;
+    private TextView groupCode;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_dashboard, container, false);
+        groupCode = (TextView) rootView.findViewById(R.id.text_group_code);
 
         Group groupData = (Group) getArguments().getSerializable("groupData");
 
+        groupCode.setText(groupData.getCode());
         list = new ArrayList<>();
 
-        for (User member: groupData.getMembers()) {
+        for (User member : groupData.getMembers()) {
             list.add(member.getFirstName() + " " + member.getLastName());
         }
 

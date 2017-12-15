@@ -211,7 +211,7 @@ public class AddTaskActivity extends AppCompatActivity implements OnCompleteList
 
             finish();
             return true;
-        }else if (id == android.R.id.home) {
+        } else if (id == android.R.id.home) {
             finish();
             return true;
         }

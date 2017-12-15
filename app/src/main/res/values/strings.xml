@@ -57,4 +57,10 @@
     <string name="label_remind">Remind within</string>
     <string name="default_radiu">50</string>
     <string name="text_meters">meters</string>
+    <string name="group_name">GROUP NAME</string>
+    <string name="create_group">Create Group</string>
+    <string name="username">username</string>
+    <string name="hint_group_name">Enter Group Name</string>
+    <string name="label_group_code">Group Code:</string>
+    <string name="text_group_code">Group Code</string>
 </resources>

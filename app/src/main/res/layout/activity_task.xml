@@ -33,7 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginBottom="68dp"
-            android:background="#FFFFFF"
+            android:background="@color/colorAccent"
             android:text="Mark As Done"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -47,17 +47,15 @@
             android:id="@+id/NudgeButton"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:background="#FFFFFF"
+            android:background="@color/colorSecondary"
             android:text="NUDGE"
-            tools:layout_editor_absoluteX="29dp"
-            tools:layout_editor_absoluteY="435dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             tools:layout_constraintBottom_creator="1"
             tools:layout_constraintLeft_creator="1"
-            tools:layout_constraintRight_creator="1"/>
+            tools:layout_constraintRight_creator="1" />
 
     </android.support.constraint.ConstraintLayout>
 

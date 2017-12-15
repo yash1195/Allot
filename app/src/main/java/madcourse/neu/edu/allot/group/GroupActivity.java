@@ -54,7 +54,7 @@ public class GroupActivity extends AppCompatActivity implements FetchGroupsRespo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group);
-
+        setTitle("My Groups");
         getNavigationBar();
 
         /**
