@@ -6,11 +6,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.TimeZone;
 
 import madcourse.neu.edu.allot.R;
 import madcourse.neu.edu.allot.blackbox.models.Task;
@@ -63,8 +70,27 @@ public class TaskCardAdapter extends BaseAdapter implements ListAdapter {
 
         //Handle TextView and display string from your list
         TextView listItemText = (TextView) view.findViewById(R.id.label_card_title);
+        TextView timeText = (TextView) view.findViewById(R.id.tv_date_time);
+        TextView description = (TextView) view.findViewById(R.id.tv_description);
+        CheckBox checkbox = (CheckBox) view.findViewById(R.id.checkbox_done);
 
-        listItemText.setText(taskList.get(position).getTitle());
+        Task task = taskList.get(position);
+
+        listItemText.setText(task.getTitle());
+
+        description.setText(task.getDescription() == null ? "No description" : task.getDescription());
+        if (task.getIsDone()) {
+            checkbox.setChecked(true);
+        } else {
+            checkbox.setChecked(false);
+        }
+
+        long unixSeconds = Long.parseLong(task.getTime());
+        Date date = new Date(unixSeconds * 1000L);
+        SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss z");
+        sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+        String formattedDate = sdf.format(date);
+        timeText.setText(formattedDate);
 
         view.setOnClickListener(new View.OnClickListener() {
             @Override

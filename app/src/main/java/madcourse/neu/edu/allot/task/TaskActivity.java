@@ -85,20 +85,24 @@ public class TaskActivity extends AppCompatActivity {
 //                startActivity(new Intent(TaskActivity.this, PopUpActivity.class));
             }
         });
+        if (taskData.getIsDone()) {
+            markAsDone.setEnabled(false);
+            markAsDone.setText(R.string.label_task_completed);
+        } else {
+            markAsDone.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
 
-        markAsDone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+                    // requestor id-token
+                    SharedPreferences sharedPref = getSharedPreferences(User.SHARED_PREF_GROUP, MODE_PRIVATE);
+                    String requestorId = sharedPref.getString(User.SHARED_PREF_TAG_ID, "NA");
+                    String requestorToken = sharedPref.getString(User.SHARED_PREF_TAG_TOKEN, "NA");
 
-                // requestor id-token
-                SharedPreferences sharedPref = getSharedPreferences(User.SHARED_PREF_GROUP, MODE_PRIVATE);
-                String requestorId = sharedPref.getString(User.SHARED_PREF_TAG_ID, "NA");
-                String requestorToken = sharedPref.getString(User.SHARED_PREF_TAG_TOKEN, "NA");
-
-                MarkTaskAsDoneHandler.markAsDone(requestorId, requestorToken, taskData.getId());
-                TaskActivity.this.finish();
-            }
-        });
+                    MarkTaskAsDoneHandler.markAsDone(requestorId, requestorToken, taskData.getId());
+                    TaskActivity.this.finish();
+                }
+            });
+        }
     }
 
     @Override
