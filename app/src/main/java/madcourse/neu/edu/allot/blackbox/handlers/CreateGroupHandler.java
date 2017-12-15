@@ -31,6 +31,9 @@ public class CreateGroupHandler {
         params.put("token", userToken);
         params.put("groupName", groupName);
 
+        Log.d("BackendBug", userId);
+        Log.d("BackendBug", userToken);
+
         client.post(AllotApi.CREATE_GROUP, params, new TextHttpResponseHandler() {
 
             @Override
@@ -52,6 +55,7 @@ public class CreateGroupHandler {
                     responder.onSuccessfulCreateGroup(resp.getCode());
 
                 } else {
+                    Log.d("Backend", responseString);
                     responder.onFailedCreateGroup("Create Group Failed");
                 }
             }

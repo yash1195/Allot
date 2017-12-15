@@ -1,5 +1,7 @@
 package madcourse.neu.edu.allot.blackbox.handlers;
 
+import android.util.Log;
+
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
