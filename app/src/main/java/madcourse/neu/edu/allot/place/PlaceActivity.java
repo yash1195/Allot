@@ -2,6 +2,7 @@ package madcourse.neu.edu.allot.place;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Binder;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -25,7 +26,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import madcourse.neu.edu.allot.R;
+import madcourse.neu.edu.allot.blackbox.handlers.FetchGroupsHandler;
 import madcourse.neu.edu.allot.blackbox.models.Group;
+import madcourse.neu.edu.allot.blackbox.models.User;
 import madcourse.neu.edu.allot.task.AddTaskActivity;
 
 public class PlaceActivity extends AppCompatActivity {
@@ -165,5 +168,44 @@ public class PlaceActivity extends AppCompatActivity {
         public int getCount() {
             return fragmentList.size();
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        /**
+         * User credentials.
+         */
+        SharedPreferences sharedPref = getSharedPreferences(User.SHARED_PREF_GROUP, MODE_PRIVATE);
+
+        String userId = sharedPref.getString(User.SHARED_PREF_TAG_ID, "NA");
+        String userToken = sharedPref.getString(User.SHARED_PREF_TAG_TOKEN, "NA");
+
+
+        /**
+         * Fetch Group List
+         */
+        viewPager = (ViewPager) findViewById(R.id.container);
+        setupViewPager(viewPager);
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        /**
+         * User credentials.
+         */
+        SharedPreferences sharedPref = getSharedPreferences(User.SHARED_PREF_GROUP, MODE_PRIVATE);
+
+        String userId = sharedPref.getString(User.SHARED_PREF_TAG_ID, "NA");
+        String userToken = sharedPref.getString(User.SHARED_PREF_TAG_TOKEN, "NA");
+
+
+        /**
+         * Fetch Group List
+         */
+        viewPager = (ViewPager) findViewById(R.id.container);
+        setupViewPager(viewPager);
     }
 }

@@ -93,6 +93,8 @@ public class RegisterActivity extends AppCompatActivity implements RegisterRespo
 
         editor.commit();
 
+        setSessionActive();
+
         Intent intent = new Intent(getApplicationContext(), GroupActivity.class);
         startActivity(intent);
     }
@@ -121,6 +123,15 @@ public class RegisterActivity extends AppCompatActivity implements RegisterRespo
 
         inputMethodManager.hideSoftInputFromWindow(
                 activity.getCurrentFocus().getWindowToken(), 0);
+    }
+
+    private void setSessionActive() {
+
+        SharedPreferences.Editor editor = getSharedPreferences(User.SHARED_PREF_GROUP, MODE_PRIVATE).edit();
+
+        editor.putString(User.SHARED_PREF_TAG_LOGGED_IN_SESSION, "1");
+
+        editor.commit();
     }
 }
 

@@ -26,7 +26,6 @@ import madcourse.neu.edu.allot.group.GroupActivity;
  */
 public class LoginActivity extends AppCompatActivity implements LoginResponder {
 
-    AsyncHttpClient client;
 
     // UI references.
     private EditText mEmailView;
@@ -37,10 +36,11 @@ public class LoginActivity extends AppCompatActivity implements LoginResponder {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        Log.d("zeko", FirebaseInstanceId.getInstance().getToken().toString());
+        if (checkIfSessionActive()) {
+            Intent intent = new Intent(this, GroupActivity.class);
+            startActivity(intent);
+        }
 
-        // instantiate stuff
-        client = new AsyncHttpClient();
 
         mEmailView = (EditText) findViewById(R.id.email);
         mPasswordView = (EditText) findViewById(R.id.password);
@@ -48,7 +48,6 @@ public class LoginActivity extends AppCompatActivity implements LoginResponder {
         // android device id
         SharedPreferences sharedPref = getSharedPreferences(User.SHARED_PREF_GROUP, MODE_PRIVATE);
         final String androidDeviceId = sharedPref.getString(User.SHARED_PREF_TAG_DEVICE_ID, "NA");
-
 
         // sign in
         Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
@@ -93,6 +92,23 @@ public class LoginActivity extends AppCompatActivity implements LoginResponder {
                 activity.getCurrentFocus().getWindowToken(), 0);
     }
 
+    private boolean checkIfSessionActive() {
+
+        SharedPreferences sharedPref = getSharedPreferences(User.SHARED_PREF_GROUP, MODE_PRIVATE);
+        final String isSessionActive = sharedPref.getString(User.SHARED_PREF_TAG_LOGGED_IN_SESSION, "0");
+        Log.d("ActiveSession", isSessionActive);
+        return isSessionActive.equals("1");
+    }
+
+    private void setSessionActive() {
+
+        SharedPreferences.Editor editor = getSharedPreferences(User.SHARED_PREF_GROUP, MODE_PRIVATE).edit();
+
+        editor.putString(User.SHARED_PREF_TAG_LOGGED_IN_SESSION, "1");
+
+        editor.commit();
+    }
+
     /**
      * On login success.
      *
@@ -111,6 +127,8 @@ public class LoginActivity extends AppCompatActivity implements LoginResponder {
         editor.putString(User.SHARED_PREF_TAG_ID, user.getId());
 
         editor.commit();
+
+        setSessionActive();
 
         Intent intent = new Intent(this, GroupActivity.class);
         startActivity(intent);

@@ -14,6 +14,7 @@ public class User implements Serializable {
     public static final String SHARED_PREF_TAG_TOKEN = "LOGGED_IN_USER_TOKEN";
     public static final String SHARED_PREF_TAG_ID = "LOGGED_IN_USER_ID";
     public static final String SHARED_PREF_TAG_DEVICE_ID = "LOGGED_IN_DEVICE_TOKEN";
+    public static final String SHARED_PREF_TAG_LOGGED_IN_SESSION = "0";
 
     private String firstName = "";
     private String lastName = "";

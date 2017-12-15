@@ -8,6 +8,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import madcourse.neu.edu.allot.LoginActivity;
 import madcourse.neu.edu.allot.R;
 import madcourse.neu.edu.allot.blackbox.handlers.FetchGroupsHandler;
 import madcourse.neu.edu.allot.blackbox.models.Group;
@@ -38,7 +40,6 @@ public class GroupActivity extends AppCompatActivity implements FetchGroupsRespo
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle mToggle;
     TextView userNameMenu, userEmail;
-    Button settingsButton;
     Button logout;
     Button groupsButton;
 
@@ -151,14 +152,30 @@ public class GroupActivity extends AppCompatActivity implements FetchGroupsRespo
         userEmail = (TextView) findViewById(R.id.userEmailId);
         userEmail.setText(userEmailId);
 
-        settingsButton = (Button) findViewById(R.id.settingsButton);
-        settingsButton.setText("Settings");
-        settingsButton.setTextColor(Color.BLACK);
-        settingsButton.setBackgroundColor(Color.WHITE);
+//        settingsButton = (Button) findViewById(R.id.settingsButton);
+//        settingsButton.setText("Settings");
+//        settingsButton.setTextColor(Color.BLACK);
+//        settingsButton.setBackgroundColor(Color.WHITE);
 
         logout = (Button) findViewById(R.id.Logout);
         logout.setTextColor(Color.BLACK);
         logout.setBackgroundColor(Color.WHITE);
+
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Log.d("hamburger", "clicked");
+
+                // disable session
+                SharedPreferences.Editor editor = getSharedPreferences(User.SHARED_PREF_GROUP, MODE_PRIVATE).edit();
+                editor.putString(User.SHARED_PREF_TAG_LOGGED_IN_SESSION, "0");
+                editor.commit();
+
+                Intent intent = new Intent(GroupActivity.this, LoginActivity.class);
+                startActivity(intent);
+            }
+        });
 
         groupsButton = (Button) findViewById(R.id.groupsButton);
         groupsButton.setTextColor(Color.BLACK);
@@ -174,6 +191,7 @@ public class GroupActivity extends AppCompatActivity implements FetchGroupsRespo
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         if (mToggle.onOptionsItemSelected(item)) {
             return true;
         }

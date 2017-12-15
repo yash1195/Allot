@@ -36,8 +36,8 @@ public class PopUpActivity extends AppCompatActivity {
         ShakeDetector.create(this, new ShakeDetector.OnShakeListener() {
             @Override
             public void OnShake() {
-                Toast.makeText(getApplicationContext(), "Device shaken!", Toast.LENGTH_SHORT).show();
 
+                Toast.makeText(getApplicationContext(), "Good Nudge!", Toast.LENGTH_SHORT).show();
 
                 // Make Nudge Request
                 String taskIdToBeNudged = taskData.getId();
@@ -46,12 +46,14 @@ public class PopUpActivity extends AppCompatActivity {
                 String userId = sharedPref.getString(User.SHARED_PREF_TAG_ID, "NA");
                 String userToken = sharedPref.getString(User.SHARED_PREF_TAG_TOKEN, "NA");
                 NudgeHandler.doNudge(userId, userToken,taskIdToBeNudged);
+                finish();
             }
         });
     }
 
     @Override
     protected void onDestroy() {
+        ShakeDetector.stop();
         ShakeDetector.destroy();
         super.onDestroy();
     }
