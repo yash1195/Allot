@@ -17,12 +17,11 @@ public class ParticipantActivity extends AppCompatActivity {
         Intent intent = getIntent();
         setTitle(intent.getStringExtra("name"));
     }
-    private static final int BACK_BUTTON = 16908332;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == BACK_BUTTON) {
+        if (id == android.R.id.home) {
             finish();
             return true;
         }

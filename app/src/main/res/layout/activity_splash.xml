@@ -6,17 +6,29 @@
     android:layout_height="match_parent"
     tools:context="madcourse.neu.edu.allot.SplashActivity">
 
-    <LinearLayout
+    <ImageView
+        android:id="@+id/imageView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:layout_height="203dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="132dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/app_logo_allot"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="192dp"
-            android:layout_height="77dp"
-            android:layout_gravity="center"
-            android:src="@drawable/logo_allot" />
-    </LinearLayout>
+    <TextView
+        android:id="@+id/text_motto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/text_motto"
+        android:textColor="@color/colorAccent"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
 </android.support.constraint.ConstraintLayout>
