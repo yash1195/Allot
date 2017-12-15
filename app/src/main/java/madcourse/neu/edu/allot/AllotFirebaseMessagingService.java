@@ -51,11 +51,12 @@ public class AllotFirebaseMessagingService extends FirebaseMessagingService {
 
 //
 //
+        Log.d("From", remoteMessage.getNotification().getBody());
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
                         .setSmallIcon(R.drawable.logo_allot)
-                        .setContentTitle(intent.getStringExtra("Allot"))
-                        .setContentText("Alert!");
+                        .setContentTitle(intent.getStringExtra("Allot Alert:"))
+                        .setContentText(remoteMessage.getNotification().getBody());
         mBuilder.setContentIntent(pendingIntent);
         mBuilder.setDefaults(Notification.DEFAULT_SOUND);
         mBuilder.setAutoCancel(true);
