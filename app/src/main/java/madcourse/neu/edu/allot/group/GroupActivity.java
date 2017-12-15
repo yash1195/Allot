@@ -157,7 +157,7 @@ public class GroupActivity extends AppCompatActivity implements FetchGroupsRespo
 //        settingsButton.setTextColor(Color.BLACK);
 //        settingsButton.setBackgroundColor(Color.WHITE);
 
-        logout = (Button) findViewById(R.id.Logout);
+        logout = (Button) findViewById(R.id.LogoutBtn);
         logout.setTextColor(Color.BLACK);
         logout.setBackgroundColor(Color.WHITE);
 
@@ -183,7 +183,9 @@ public class GroupActivity extends AppCompatActivity implements FetchGroupsRespo
 
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
-        mToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
+        mToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close) {
+
+        };
         drawerLayout.addDrawerListener(mToggle);
         mToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -192,9 +194,12 @@ public class GroupActivity extends AppCompatActivity implements FetchGroupsRespo
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        if (mToggle.onOptionsItemSelected(item)) {
-            return true;
-        }
+        Log.d("hamburger", "clicked");
+
+//        if (mToggle.onOptionsItemSelected(item)) {
+//            return true;
+//        }
+        mToggle.onOptionsItemSelected(item);
         return super.onOptionsItemSelected(item);
     }
 

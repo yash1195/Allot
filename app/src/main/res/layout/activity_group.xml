@@ -89,11 +89,12 @@
                         <!--android:text="Home" />-->
 
                     <Button
-                        android:id="@+id/Logout"
+                        android:id="@+id/LogoutBtn"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:layout_marginTop="10dp"
-                        android:text="LogOut" />
+                        android:text="LogOut"
+                        android:clickable="true" />
 
                     <TextView
                         android:layout_width="match_parent"
