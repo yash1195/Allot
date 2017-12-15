@@ -69,6 +69,9 @@ public class CreateTaskHandler {
         // group code
         params.put("groupCode", taskToBeCreated.getGroupCode());
 
+        // description
+        params.put("description", taskToBeCreated.getDescription());
+
 
         client.post(AllotApi.CREATE_TASK, params, new TextHttpResponseHandler() {
             @Override
