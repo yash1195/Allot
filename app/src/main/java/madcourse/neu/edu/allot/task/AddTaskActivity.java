@@ -73,6 +73,7 @@ public class AddTaskActivity extends AppCompatActivity implements OnCompleteList
     private int day, month, year, hour, minute;
 
     private LatLng selectedLatLng;
+    private boolean hasLocation;
     private String nameOfLocation = "";
 
     // group data
@@ -90,6 +91,7 @@ public class AddTaskActivity extends AppCompatActivity implements OnCompleteList
 
         // geo service
         selectedLatLng = null;
+        hasLocation = false;
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(getIntent().getStringExtra("place"));
         setSupportActionBar(toolbar);
@@ -205,6 +207,9 @@ public class AddTaskActivity extends AppCompatActivity implements OnCompleteList
 
                 geofencingClient.addGeofences(getGeofencingRequest(), getGeofencePendingIntent())
                         .addOnCompleteListener(this);
+                hasLocation = true;
+            } else {
+                hasLocation = false;
             }
 
             createTask();
@@ -303,10 +308,12 @@ public class AddTaskActivity extends AppCompatActivity implements OnCompleteList
         createdTask.setDescription(descriptionView.getText().toString());
 
         // location
-        createdTask.setLatitude(selectedLatLng.latitude);
-        createdTask.setLongitude(selectedLatLng.longitude);
-        if (nameOfLocation.length() != 0) {
-            createdTask.setIsLocationEnabled(true);
+        if (hasLocation) {
+            createdTask.setLatitude(selectedLatLng.latitude);
+            createdTask.setLongitude(selectedLatLng.longitude);
+            if (nameOfLocation.length() != 0) {
+                createdTask.setIsLocationEnabled(true);
+            }
         }
 
         // time
@@ -345,7 +352,7 @@ public class AddTaskActivity extends AppCompatActivity implements OnCompleteList
         //set the alarm for particular time
         alarmManager.set(AlarmManager.RTC_WAKEUP, time, PendingIntent.getBroadcast(this,
                 1, intentAlarm, PendingIntent.FLAG_UPDATE_CURRENT));
-        Toast.makeText(this, "Alarm Scheduled for ", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Task Created", Toast.LENGTH_LONG).show();
         return true;
     }
 
