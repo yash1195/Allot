@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -35,10 +36,10 @@ public class TaskActivity extends AppCompatActivity {
 
         taskData = (Task) getIntent().getExtras().get("taskData");
 
-        NudgeButton =(Button) findViewById(R.id.NudgeButton);
+        NudgeButton = (Button) findViewById(R.id.NudgeButton);
         markAsDone = (Button) findViewById(R.id.MarkButton);
 
-        for (User participant: taskData.getParticipants()) {
+        for (User participant : taskData.getParticipants()) {
             participants.add(participant.getFirstName() + " " + participant.getLastName());
         }
 
@@ -49,13 +50,12 @@ public class TaskActivity extends AppCompatActivity {
         );
         paramsTextLable.setMargins(5, 5, 10, 20);
 
-        taskLinerLayout = (LinearLayout)findViewById(R.id.taskLinearLayout);
+        taskLinerLayout = (LinearLayout) findViewById(R.id.taskLinearLayout);
         TextView allotedText = new TextView(this);
         allotedText.setText("ALLOTED TO:");
         allotedText.setTextSize(30);
         allotedText.setLayoutParams(paramsTextLable);
         taskLinerLayout.addView(allotedText);
-
 
 
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
@@ -65,7 +65,7 @@ public class TaskActivity extends AppCompatActivity {
         params.setMargins(10, 5, 10, 5);
 
 
-        for(int i=0;i<participants.size();i++){
+        for (int i = 0; i < participants.size(); i++) {
             TextView textview = new TextView(this);
             textview.setText(participants.get(i));
             textview.setBackgroundColor(Color.WHITE);
@@ -82,6 +82,7 @@ public class TaskActivity extends AppCompatActivity {
                 Intent nudgePopup = new Intent(TaskActivity.this, PopUpActivity.class).putExtra("taskData", taskData);
                 startActivity(nudgePopup);
 //                startActivity(new Intent(TaskActivity.this,PopUpActivity.class));
+//                startActivity(new Intent(TaskActivity.this, PopUpActivity.class));
             }
         });
 
@@ -98,5 +99,15 @@ public class TaskActivity extends AppCompatActivity {
                 TaskActivity.this.finish();
             }
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

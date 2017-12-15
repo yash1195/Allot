@@ -1,13 +1,7 @@
 package madcourse.neu.edu.allot.place;
 
-/**
- * Created by zeko on 12/7/17.
- */
-
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,26 +72,6 @@ public class GroupListCardAdapter extends BaseAdapter implements ListAdapter {
                 context.startActivity(intent);
             }
         });
-
-        /*//Handle buttons and add onClickListeners
-        Button deleteBtn = (Button)view.findViewById(R.id.delete_btn);
-        Button addBtn = (Button)view.findViewById(R.id.add_btn);
-
-        deleteBtn.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                //do something
-                list.remove(position); //or some other task
-                notifyDataSetChanged();
-            }
-        });
-        addBtn.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                //do something
-                notifyDataSetChanged();
-            }
-        });*/
         return view;
     }
 }

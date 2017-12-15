@@ -1,7 +1,5 @@
 package madcourse.neu.edu.allot.blackbox.handlers;
 
-import android.util.Log;
-
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
@@ -11,15 +9,8 @@ import java.util.List;
 import cz.msebera.android.httpclient.Header;
 import madcourse.neu.edu.allot.blackbox.api.AllotApi;
 import madcourse.neu.edu.allot.blackbox.models.Group;
-import madcourse.neu.edu.allot.blackbox.models.User;
 import madcourse.neu.edu.allot.blackbox.responders.FetchGroupsResponder;
-import madcourse.neu.edu.allot.blackbox.responders.LoginResponder;
 import madcourse.neu.edu.allot.blackbox.response.FetchUserGroupsResponse;
-import madcourse.neu.edu.allot.blackbox.response.LoginResponse;
-
-/**
- * Created by zeko on 12/6/17.
- */
 
 public class FetchGroupsHandler {
 

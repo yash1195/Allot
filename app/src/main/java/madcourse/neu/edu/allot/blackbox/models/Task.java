@@ -4,10 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by zeko on 12/7/17.
- */
-
 public class Task implements Serializable {
 
     private String title = "";

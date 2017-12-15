@@ -37,7 +37,7 @@ public class GroupActivity extends AppCompatActivity implements FetchGroupsRespo
 
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle mToggle;
-    TextView userNameMenu,userEmail;
+    TextView userNameMenu, userEmail;
     Button settingsButton;
     Button logout;
     Button groupsButton;
@@ -54,9 +54,8 @@ public class GroupActivity extends AppCompatActivity implements FetchGroupsRespo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group);
-
-        getNevigationBar();
-
+        setTitle("My Groups");
+        getNavigationBar();
 
         /**
          * floating action bar
@@ -72,8 +71,6 @@ public class GroupActivity extends AppCompatActivity implements FetchGroupsRespo
 
         fabCreateGroupText = (TextView) findViewById(R.id.createGroupTextfab);
         fabJoinGroupText = (TextView) findViewById(R.id.joinGroupTextfab);
-
-
         fabplus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -120,7 +117,6 @@ public class GroupActivity extends AppCompatActivity implements FetchGroupsRespo
             }
         });
 
-
         /**
          * User credentials.
          */
@@ -138,7 +134,7 @@ public class GroupActivity extends AppCompatActivity implements FetchGroupsRespo
         FetchGroupsHandler.doFetch(this, userId, userToken);
     }
 
-    public void getNevigationBar() {
+    public void getNavigationBar() {
 
         /**
          * Navigation bar
@@ -150,7 +146,7 @@ public class GroupActivity extends AppCompatActivity implements FetchGroupsRespo
         userEmailId = sharedPref.getString(User.SHARED_PREF_TAG_EMAIL, "NA");
 
         userNameMenu = (TextView) findViewById(R.id.userNameMenu);
-        userNameMenu.setText(userFirstName+" "+userLastName);
+        userNameMenu.setText(userFirstName + " " + userLastName);
 
         userEmail = (TextView) findViewById(R.id.userEmailId);
         userEmail.setText(userEmailId);
@@ -167,7 +163,7 @@ public class GroupActivity extends AppCompatActivity implements FetchGroupsRespo
         groupsButton = (Button) findViewById(R.id.groupsButton);
         groupsButton.setTextColor(Color.BLACK);
         groupsButton.setBackgroundColor(Color.WHITE);
-        
+
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         mToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
@@ -193,11 +189,10 @@ public class GroupActivity extends AppCompatActivity implements FetchGroupsRespo
         ArrayList<String> testingGroupButtons = new ArrayList();
 
         for (Group group : groups) {
-
             testingGroupButtons.add(group.getName());
         }
 
-        GroupListCardAdapter adapter = new GroupListCardAdapter(groups, getApplicationContext(), R.layout.card_group, PlaceActivity.class);
+        GroupListCardAdapter adapter = new GroupListCardAdapter(groups, this, R.layout.card_group, PlaceActivity.class);
 
         groupList = (ListView) findViewById(R.id.list_groups);
         groupList.setAdapter(adapter);

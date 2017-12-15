@@ -61,7 +61,7 @@ public class CardAdapter extends BaseAdapter implements ListAdapter {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, activity);
-                intent.putExtra("place", list.get(position));
+                intent.putExtra("name", list.get(position));
                 context.startActivity(intent);
             }
         });

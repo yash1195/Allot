@@ -112,7 +112,7 @@ public class LoginActivity extends AppCompatActivity implements LoginResponder {
 
         editor.commit();
 
-        Intent intent = new Intent(getApplicationContext(), GroupActivity.class);
+        Intent intent = new Intent(this, GroupActivity.class);
         startActivity(intent);
     }
 
