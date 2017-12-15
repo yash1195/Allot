@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.MenuItem;
@@ -12,9 +14,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.common.api.Status;
-import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.util.ArrayList;
 
@@ -23,7 +24,8 @@ import madcourse.neu.edu.allot.blackbox.handlers.MarkTaskAsDoneHandler;
 import madcourse.neu.edu.allot.blackbox.models.Task;
 import madcourse.neu.edu.allot.blackbox.models.User;
 
-public class TaskActivity extends AppCompatActivity {
+public class TaskActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener {
 
     LinearLayout taskLinerLayout;
     ArrayList<String> participants = new ArrayList<>();
@@ -101,7 +103,9 @@ public class TaskActivity extends AppCompatActivity {
                     SharedPreferences sharedPref = getSharedPreferences(User.SHARED_PREF_GROUP, MODE_PRIVATE);
                     String requestorId = sharedPref.getString(User.SHARED_PREF_TAG_ID, "NA");
                     String requestorToken = sharedPref.getString(User.SHARED_PREF_TAG_TOKEN, "NA");
-
+                    /*if (taskData.getIsLocationEnabled()) {
+                        removeGeofence(Double.toString(taskData.getLatitude() + taskData.getLongitude()));
+                    }*/
                     MarkTaskAsDoneHandler.markAsDone(requestorId, requestorToken, taskData.getId());
                     TaskActivity.this.finish();
                 }
@@ -109,14 +113,19 @@ public class TaskActivity extends AppCompatActivity {
         }
     }
 
-    public void removeGeofence(String id) {
-       /* try {
+    /*public void removeGeofence(String id) {
+        try {
             ArrayList<String> geofencIds = new ArrayList<String>();
             geofencIds.add(id);
-
+            GoogleApiClient mGoogleApiClient;
+            mGoogleApiClient = new GoogleApiClient.Builder(this)
+                    .addConnectionCallbacks(this)
+                    .addOnConnectionFailedListener(TaskActivity.this)
+                    .addApi(LocationServices.API)
+                    .build();
+            mGoogleApiClient.connect();
             LocationServices.GeofencingApi
-                    .removeGeofences(getSharedPreferences("apiclient", MODE_PRIVATE)
-                            .getString("googleapiclient","N/A"), geofencIds)
+                    .removeGeofences(mGoogleApiClient, geofencIds)
                     .setResultCallback(new ResultCallback<Status>() {
 
                         @Override
@@ -127,8 +136,8 @@ public class TaskActivity extends AppCompatActivity {
                     });
         } catch (SecurityException securityException) {
             securityException.printStackTrace();
-        }*/
-    }
+        }
+    }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -138,5 +147,20 @@ public class TaskActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
     }
 }

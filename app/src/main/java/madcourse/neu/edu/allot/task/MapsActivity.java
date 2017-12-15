@@ -211,8 +211,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 .addApi(LocationServices.API)
                 .build();
         mGoogleApiClient.connect();
-//        SharedPreferences.Editor editor = getSharedPreferences("apiclient", MODE_PRIVATE).edit();
-//        editor.putString("googleapiclient", mGoogleApiClient.toString());
     }
 
     @Override
