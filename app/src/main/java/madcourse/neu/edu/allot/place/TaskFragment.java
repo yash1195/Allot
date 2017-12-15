@@ -26,12 +26,13 @@ public class TaskFragment extends Fragment implements FetchTasksResponder {
     private ListView taskList;
     private List<Task> list;
     private TaskCardAdapter cardAdapter;
+    Group groupData;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_tasks, container, false);
 
-        Group groupData = (Group) getArguments().getSerializable("groupData");
+        groupData = (Group) getArguments().getSerializable("groupData");
 
         SharedPreferences sharedPref = getContext().getSharedPreferences(User.SHARED_PREF_GROUP, MODE_PRIVATE);
 
@@ -55,6 +56,20 @@ public class TaskFragment extends Fragment implements FetchTasksResponder {
 
         cardAdapter.refreshTasks(tasks);
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        SharedPreferences sharedPref = getContext().getSharedPreferences(User.SHARED_PREF_GROUP, MODE_PRIVATE);
+
+        String userId = sharedPref.getString(User.SHARED_PREF_TAG_ID, "NA");
+        String userToken = sharedPref.getString(User.SHARED_PREF_TAG_TOKEN, "NA");
+        FetchGroupTasksHandler.doFetch(this, userId, userToken, groupData.getCode());
+    }
+
+
+
 
     @Override
     public void onFailedTaskFetch(String msg) {

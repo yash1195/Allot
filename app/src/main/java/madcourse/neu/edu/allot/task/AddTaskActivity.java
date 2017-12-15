@@ -115,6 +115,7 @@ public class AddTaskActivity extends AppCompatActivity implements OnCompleteList
                         AddTaskActivity.this,
                         calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
                         calendar.get(Calendar.DAY_OF_MONTH));
+                datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
                 datePickerDialog.show();
             }
         });
@@ -317,8 +318,10 @@ public class AddTaskActivity extends AppCompatActivity implements OnCompleteList
         }
 
         // time
-        Date taskDateTime = new Date(year, month, day, hour, minute);
-        createdTask.setTime(Long.toString(taskDateTime.getTime()));
+        GregorianCalendar calendar = new GregorianCalendar();
+        calendar.set(year, month - 1, day, hour, minute);
+
+        createdTask.setTime(Long.toString(calendar.getTimeInMillis()));
 
         // group code
         createdTask.setGroupCode(groupData.getCode());
@@ -336,13 +339,13 @@ public class AddTaskActivity extends AppCompatActivity implements OnCompleteList
 
         Calendar calendar = Calendar.getInstance();
 
-        if (calendar.get(Calendar.YEAR) > year || calendar.get(Calendar.MONTH) > month ||
-                calendar.get(Calendar.DAY_OF_MONTH) > day || calendar.get(Calendar.HOUR) > hour ||
-                calendar.get(Calendar.MINUTE) > minute) {
-            Toast.makeText(this, "Cannot schedule a task in the past",
-                    Toast.LENGTH_LONG).show();
-            return false;
-        }
+//        if (calendar.get(Calendar.YEAR) > year || calendar.get(Calendar.MONTH) > month ||
+//                calendar.get(Calendar.DAY_OF_MONTH) > day || calendar.get(Calendar.HOUR) > hour ||
+//                calendar.get(Calendar.MINUTE) > minute) {
+//            Toast.makeText(this, "Cannot schedule a task in the past",
+//                    Toast.LENGTH_LONG).show();
+//            return false;
+//        }
         //TODO: add day, month, hour
         int min = minute - calendar.get(Calendar.MINUTE);
         Long time = new GregorianCalendar().getTimeInMillis() + 60 * 1000;

@@ -32,7 +32,7 @@ public class AllotFirebaseMessagingService extends FirebaseMessagingService {
         Log.d(TAG, "Notification Message Body: " + remoteMessage.getNotification().getBody());
 
         // Create Notification
-        Intent intent = new Intent(this, RegisterActivity.class);
+        Intent intent = new Intent(this, GroupActivity.class);
 //        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 //        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 //        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
