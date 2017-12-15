@@ -57,7 +57,6 @@ import madcourse.neu.edu.allot.blackbox.models.User;
 public class AddTaskActivity extends AppCompatActivity implements OnCompleteListener<Void>,
         DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
-    private static final int BACK_BUTTON = 16908332;
     private EditText taskNameView;
     private EditText descriptionView;
     private EditText locationView;
@@ -212,7 +211,7 @@ public class AddTaskActivity extends AppCompatActivity implements OnCompleteList
 
             finish();
             return true;
-        }else if (id == BACK_BUTTON) {
+        }else if (id == android.R.id.home) {
             finish();
             return true;
         }

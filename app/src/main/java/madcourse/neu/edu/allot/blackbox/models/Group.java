@@ -4,10 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by zeko on 12/6/17.
- */
-
 public class Group implements Serializable {
 
     private String name = "";
