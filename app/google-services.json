@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "3030291507",
+    "firebase_url": "https://allot-2e179.firebaseio.com",
+    "project_id": "allot-2e179",
+    "storage_bucket": "allot-2e179.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:3030291507:android:aa1ee78c1994374b",
+        "android_client_info": {
+          "package_name": "madcourse.neu.edu.allot"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "3030291507-9b20at74ehmo9qiqguo66sog6f4sc0s9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "madcourse.neu.edu.allot",
+            "certificate_hash": "628e6d5e7fdc619fb2ee2452df52ff040ea09178"
+          }
+        },
+        {
+          "client_id": "3030291507-tqea9fi4fkvjamq0456518h4baha2egn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCtgkv2fh-WtnZR6WLjMU2HLSKoBAQCePQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "3030291507-tqea9fi4fkvjamq0456518h4baha2egn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

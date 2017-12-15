@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="madcourse.neu.edu.allot.task.AddTaskActivity"
+    tools:showIn="@layout/activity_add_task">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+
+        <TextView
+            android:id="@+id/text_taskname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/text_task_name"
+            android:textSize="18sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/editText_taskname" />
+
+        <EditText
+            android:id="@+id/editText_taskname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            app:layout_constraintStart_toEndOf="@+id/text_taskname"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/text_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@string/text_description"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@+id/editText_description"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/editText_description" />
+
+        <EditText
+            android:id="@+id/editText_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/text_description"
+            app:layout_constraintTop_toBottomOf="@+id/editText_taskname" />
+
+        <TextView
+            android:id="@+id/text_allot_to"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/text_allot_to"
+            android:textSize="18sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button_set_time" />
+
+        <TextView
+            android:id="@+id/label_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@string/text_location"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@+id/text_location"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/text_location"
+            app:layout_constraintVertical_bias="0.523" />
+
+        <Button
+            android:id="@+id/button_choose_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:onClick="chooseLocation"
+            android:text="@string/button_choose_location"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_location" />
+
+        <EditText
+            android:id="@+id/text_location"
+            android:layout_width="258dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:hint="@string/text_pick_location"
+            android:inputType="none"
+            android:textSize="18sp"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="@+id/editText_set_time"
+            app:layout_constraintStart_toEndOf="@+id/label_location"
+            app:layout_constraintTop_toBottomOf="@+id/editText_description" />
+
+        <TextView
+            android:id="@+id/label_set_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@string/label_set_time"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@+id/editText_set_time"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/editText_set_time" />
+
+        <EditText
+            android:id="@+id/editText_set_time"
+            android:layout_width="258dp"
+            android:layout_height="45dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:hint="@string/button_set_time"
+            android:inputType="none"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/label_set_time"
+            app:layout_constraintTop_toBottomOf="@+id/editText_radius" />
+
+        <Button
+            android:id="@+id/button_set_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:text="@string/button_set_time"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editText_set_time" />
+
+        <ListView
+            android:id="@+id/list_allot_participant"
+            android:layout_width="256dp"
+            android:layout_height="250dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/text_allot_to"
+            app:layout_constraintTop_toBottomOf="@+id/button_set_time" />
+
+        <TextView
+            android:id="@+id/text_remind"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/label_remind"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button_choose_location" />
+
+        <EditText
+            android:id="@+id/editText_radius"
+            android:layout_width="47dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="16dp"
+            android:ems="10"
+            android:inputType="number"
+            android:text="@string/default_radiu"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/text_remind"
+            app:layout_constraintStart_toEndOf="@+id/text_remind"
+            app:layout_constraintTop_toBottomOf="@+id/button_choose_location"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/text_meters"
+            app:layout_constraintBottom_toBottomOf="@+id/editText_radius"
+            app:layout_constraintEnd_toStartOf="@+id/button_choose_location"
+            app:layout_constraintHorizontal_bias="0.062"
+            app:layout_constraintStart_toEndOf="@+id/editText_radius"
+            app:layout_constraintTop_toTopOf="@+id/editText_radius"
+            app:layout_constraintVertical_bias="0.615" />
+
+    </android.support.constraint.ConstraintLayout>
+</ScrollView>
