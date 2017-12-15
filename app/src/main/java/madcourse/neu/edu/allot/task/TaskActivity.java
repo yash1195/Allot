@@ -78,7 +78,10 @@ public class TaskActivity extends AppCompatActivity {
         NudgeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(TaskActivity.this,PopUpActivity.class));
+
+                Intent nudgePopup = new Intent(TaskActivity.this, PopUpActivity.class).putExtra("taskData", taskData);
+                startActivity(nudgePopup);
+//                startActivity(new Intent(TaskActivity.this,PopUpActivity.class));
             }
         });
 

@@ -31,4 +31,7 @@ public class AllotApi {
 
     // mark task as done
     public static final String MARK_TASK_AS_DONE = BASE_URL + "task/markAsDone";
+
+    // nudge task participants
+    public static final String NUDGE_TASK_PARTICIPANTS = BASE_URL + "task/nudgeParticipants";
 }

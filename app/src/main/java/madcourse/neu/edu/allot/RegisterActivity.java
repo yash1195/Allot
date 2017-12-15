@@ -15,6 +15,7 @@ import android.widget.Toast;
 import madcourse.neu.edu.allot.blackbox.handlers.RegisterHandler;
 import madcourse.neu.edu.allot.blackbox.models.User;
 import madcourse.neu.edu.allot.blackbox.responders.RegisterResponder;
+import madcourse.neu.edu.allot.group.GroupActivity;
 import madcourse.neu.edu.allot.place.PlaceActivity;
 
 
@@ -92,7 +93,7 @@ public class RegisterActivity extends AppCompatActivity implements RegisterRespo
 
         editor.commit();
 
-        Intent intent = new Intent(getApplicationContext(), PlaceActivity.class);
+        Intent intent = new Intent(getApplicationContext(), GroupActivity.class);
         startActivity(intent);
     }
 

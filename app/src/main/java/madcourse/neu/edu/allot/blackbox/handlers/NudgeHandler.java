@@ -8,14 +8,13 @@ import com.loopj.android.http.TextHttpResponseHandler;
 
 import cz.msebera.android.httpclient.Header;
 import madcourse.neu.edu.allot.blackbox.api.AllotApi;
-import madcourse.neu.edu.allot.blackbox.responders.CreateGroupResponder;
 import madcourse.neu.edu.allot.blackbox.response.SuccessfulCreateGroupResponse;
 
 /**
- * Created by zeko on 12/6/17.
+ * Created by zeko on 12/14/17.
  */
 
-public class CreateGroupHandler {
+public class NudgeHandler {
 
     private static RequestParams params;
     private static AsyncHttpClient client;
@@ -24,20 +23,19 @@ public class CreateGroupHandler {
         client = new AsyncHttpClient();
     }
 
-    public static void doCreate(final CreateGroupResponder responder, String userId, String userToken, String groupName) {
+    public static void doNudge(String userId, String userToken, String taskId) {
 
         params = new RequestParams();
         params.put("id", userId);
         params.put("token", userToken);
-        params.put("groupName", groupName);
+        params.put("taskId", taskId);
 
-        client.post(AllotApi.CREATE_GROUP, params, new TextHttpResponseHandler() {
+        client.post(AllotApi.NUDGE_TASK_PARTICIPANTS, params, new TextHttpResponseHandler() {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
 
-                Log.d("Backend", responseString);
-                responder.onFailedCreateGroup("Error");
+                Log.d("NudgeHandler", "Nudge Failed");
             }
 
             @Override
@@ -49,10 +47,10 @@ public class CreateGroupHandler {
 
                 if (status == 200) {
 
-                    responder.onSuccessfulCreateGroup(resp.getCode());
+                    Log.d("NudgeHandler", "Nudge Done");
 
                 } else {
-                    responder.onFailedCreateGroup("Create Group Failed");
+                    Log.d("NudgeHandler", "Nudge Failed");
                 }
             }
         });
