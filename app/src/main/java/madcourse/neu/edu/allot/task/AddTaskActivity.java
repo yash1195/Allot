@@ -194,7 +194,7 @@ public class AddTaskActivity extends AppCompatActivity implements OnCompleteList
             if (selectedLatLng != null) {
                 GEOFENCE_RADIUS_IN_METERS = Float.parseFloat(radiusView.getText().toString());
                 geofenceList.add(new Geofence.Builder()
-                        .setRequestId(nameOfLocation)
+                        .setRequestId(Double.toString(selectedLatLng.latitude + selectedLatLng.longitude))
                         .setCircularRegion(
                                 selectedLatLng.latitude,
                                 selectedLatLng.longitude,

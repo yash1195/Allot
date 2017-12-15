@@ -2,8 +2,11 @@ package madcourse.neu.edu.allot.group;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.graphics.Color;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -39,6 +42,7 @@ public class GroupActivity extends AppCompatActivity implements FetchGroupsRespo
 
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle mToggle;
+    private NavigationView navigationView;
     TextView userNameMenu, userEmail;
     Button logout;
     Button groupsButton;
@@ -137,9 +141,30 @@ public class GroupActivity extends AppCompatActivity implements FetchGroupsRespo
 
     public void getNavigationBar() {
 
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         /**
          * Navigation bar
          */
+        navigationView = (NavigationView) findViewById(R.id.navigation_view);
+        View header = navigationView.getHeaderView(0);
+//        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+//            @Override
+//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//                int id = item.getItemId();
+//                int lid = logout.getId();
+//                if (id == logout.getId()) {
+//                    // disable session
+//                    SharedPreferences.Editor editor = getSharedPreferences(User.SHARED_PREF_GROUP, MODE_PRIVATE).edit();
+//                    editor.putString(User.SHARED_PREF_TAG_LOGGED_IN_SESSION, "0");
+//                    editor.commit();
+//
+//                    Intent intent = new Intent(GroupActivity.this, LoginActivity.class);
+//                    startActivity(intent);
+//                }
+//                return false;
+//            }
+//        });
         SharedPreferences sharedPref = getSharedPreferences(User.SHARED_PREF_GROUP, MODE_PRIVATE);
 
         userFirstName = sharedPref.getString(User.SHARED_PREF_TAG_FIRST_NAME, "NA");
@@ -157,7 +182,7 @@ public class GroupActivity extends AppCompatActivity implements FetchGroupsRespo
 //        settingsButton.setTextColor(Color.BLACK);
 //        settingsButton.setBackgroundColor(Color.WHITE);
 
-        logout = (Button) findViewById(R.id.LogoutBtn);
+        logout = (Button) findViewById(R.id.button_logout);
         logout.setTextColor(Color.BLACK);
         logout.setBackgroundColor(Color.WHITE);
 
@@ -177,18 +202,35 @@ public class GroupActivity extends AppCompatActivity implements FetchGroupsRespo
             }
         });
 
-        groupsButton = (Button) findViewById(R.id.groupsButton);
+/*        groupsButton = (Button) findViewById(R.id.groupsButton);
         groupsButton.setTextColor(Color.BLACK);
-        groupsButton.setBackgroundColor(Color.WHITE);
-
+        groupsButton.setBackgroundColor(Color.WHITE);*/
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         mToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close) {
+            @Override
+            public void onDrawerOpened(View drawer) {
+                super.onDrawerOpened(drawer);
+            }
 
+            @Override
+            public void onDrawerClosed(View drawer) {
+                super.onDrawerClosed(drawer);
+            }
         };
         drawerLayout.addDrawerListener(mToggle);
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
         mToggle.syncState();
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration config) {
+        super.onConfigurationChanged(config);
+        mToggle.onConfigurationChanged(config);
     }
 
     @Override
@@ -196,10 +238,10 @@ public class GroupActivity extends AppCompatActivity implements FetchGroupsRespo
 
         Log.d("hamburger", "clicked");
 
-//        if (mToggle.onOptionsItemSelected(item)) {
-//            return true;
-//        }
-        mToggle.onOptionsItemSelected(item);
+        if (mToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        //mToggle.onOptionsItemSelected(item);
         return super.onOptionsItemSelected(item);
     }
 

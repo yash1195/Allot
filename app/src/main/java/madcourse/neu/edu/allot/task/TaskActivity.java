@@ -12,6 +12,10 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.LocationServices;
+
 import java.util.ArrayList;
 
 import madcourse.neu.edu.allot.R;
@@ -103,6 +107,27 @@ public class TaskActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    public void removeGeofence(String id) {
+       /* try {
+            ArrayList<String> geofencIds = new ArrayList<String>();
+            geofencIds.add(id);
+
+            LocationServices.GeofencingApi
+                    .removeGeofences(getSharedPreferences("apiclient", MODE_PRIVATE)
+                            .getString("googleapiclient","N/A"), geofencIds)
+                    .setResultCallback(new ResultCallback<Status>() {
+
+                        @Override
+                        public void onResult(Status status) {
+                            if (status.isSuccess()) ;
+                            // Remove notifiation here
+                        }
+                    });
+        } catch (SecurityException securityException) {
+            securityException.printStackTrace();
+        }*/
     }
 
     @Override

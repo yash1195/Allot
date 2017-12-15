@@ -3,6 +3,7 @@ package madcourse.neu.edu.allot.task;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -39,6 +40,7 @@ import java.util.List;
 import java.util.Locale;
 
 import madcourse.neu.edu.allot.R;
+import madcourse.neu.edu.allot.blackbox.models.User;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
@@ -209,6 +211,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 .addApi(LocationServices.API)
                 .build();
         mGoogleApiClient.connect();
+//        SharedPreferences.Editor editor = getSharedPreferences("apiclient", MODE_PRIVATE).edit();
+//        editor.putString("googleapiclient", mGoogleApiClient.toString());
     }
 
     @Override

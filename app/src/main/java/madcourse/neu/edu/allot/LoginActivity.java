@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.loopj.android.http.AsyncHttpClient;
+
 import madcourse.neu.edu.allot.blackbox.handlers.LoginHandler;
 import madcourse.neu.edu.allot.blackbox.models.User;
 import madcourse.neu.edu.allot.blackbox.responders.LoginResponder;
@@ -63,7 +64,6 @@ public class LoginActivity extends AppCompatActivity implements LoginResponder {
                         mEmailView.getText().toString(),
                         mPasswordView.getText().toString(),
                         androidDeviceId);
-
             }
         });
 
@@ -80,7 +80,6 @@ public class LoginActivity extends AppCompatActivity implements LoginResponder {
             }
         });
     }
-
 
     public static void hideSoftKeyboard(Activity activity) {
 
@@ -101,11 +100,8 @@ public class LoginActivity extends AppCompatActivity implements LoginResponder {
     }
 
     private void setSessionActive() {
-
         SharedPreferences.Editor editor = getSharedPreferences(User.SHARED_PREF_GROUP, MODE_PRIVATE).edit();
-
         editor.putString(User.SHARED_PREF_TAG_LOGGED_IN_SESSION, "1");
-
         editor.commit();
     }
 
