@@ -17,6 +17,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Locale;
 import java.util.TimeZone;
 
 import madcourse.neu.edu.allot.R;
@@ -78,7 +79,12 @@ public class TaskCardAdapter extends BaseAdapter implements ListAdapter {
 
         listItemText.setText(task.getTitle());
 
-        description.setText(task.getDescription() == null ? "No description" : task.getDescription());
+        if (task.getDescription() == null || task.getDescription().equals("")) {
+            description.setText("No Description Available");
+        } else {
+            description.setText(task.getDescription());
+        }
+
         if (task.getIsDone()) {
             checkbox.setChecked(true);
         } else {
@@ -86,9 +92,9 @@ public class TaskCardAdapter extends BaseAdapter implements ListAdapter {
         }
 
         long unixSeconds = Long.parseLong(task.getTime());
-        Date date = new Date(unixSeconds * 1000L);
-        SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss z");
-        sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+        Date date = new Date(unixSeconds);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.ENGLISH);
+        sdf.setTimeZone(TimeZone.getTimeZone("America/Los_Angeles"));
         String formattedDate = sdf.format(date);
         timeText.setText(formattedDate);
 

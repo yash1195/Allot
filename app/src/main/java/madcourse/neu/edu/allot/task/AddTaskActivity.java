@@ -115,6 +115,8 @@ public class AddTaskActivity extends AppCompatActivity implements OnCompleteList
                         AddTaskActivity.this,
                         calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
                         calendar.get(Calendar.DAY_OF_MONTH));
+                datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+                datePickerDialog.getDatePicker().setTim
                 datePickerDialog.show();
             }
         });
@@ -248,6 +250,14 @@ public class AddTaskActivity extends AppCompatActivity implements OnCompleteList
             showDialog("Incomplete", "Allot task to at least one participant");
             return false;
         }
+
+//        // check if valid time
+//        GregorianCalendar calendar = new GregorianCalendar();
+//        calendar.set(year, month, day, hour, minute);
+//        if (!checkIfValidTime(calendar)) {
+//            return false;
+//        }
+
         // check if the task is scheduled at a valid time
         if (!scheduleAlarm()) {
             return false;
@@ -317,8 +327,17 @@ public class AddTaskActivity extends AppCompatActivity implements OnCompleteList
         }
 
         // time
-        Date taskDateTime = new Date(year, month, day, hour, minute);
-        createdTask.setTime(Long.toString(taskDateTime.getTime()));
+        Log.d("TimeBug", year+"/"+month+"/"+day+"|"+hour+":"+minute);
+
+        month = month - 1;
+
+        GregorianCalendar calendar = new GregorianCalendar();
+        calendar.set(year, month, day, hour, minute);
+        createdTask.setTime(Long.toString(calendar.getTimeInMillis()));
+
+//        Date taskDateTime = new Date(year, month, day, hour, minute);
+//        createdTask.setTime(Long.toString(taskDateTime.getTime()));
+
 
         // group code
         createdTask.setGroupCode(groupData.getCode());
@@ -332,17 +351,18 @@ public class AddTaskActivity extends AppCompatActivity implements OnCompleteList
 
     }
 
+    private boolean checkIfValidTime(Calendar calendar) {
+
+        if (new Date().getTime() < calendar.getTimeInMillis()) {
+            return true;
+        }
+        return false;
+    }
+
     public boolean scheduleAlarm() {
 
         Calendar calendar = Calendar.getInstance();
 
-        if (calendar.get(Calendar.YEAR) > year || calendar.get(Calendar.MONTH) > month ||
-                calendar.get(Calendar.DAY_OF_MONTH) > day || calendar.get(Calendar.HOUR) > hour ||
-                calendar.get(Calendar.MINUTE) > minute) {
-            Toast.makeText(this, "Cannot schedule a task in the past",
-                    Toast.LENGTH_LONG).show();
-            return false;
-        }
         //TODO: add day, month, hour
         int min = minute - calendar.get(Calendar.MINUTE);
         Long time = new GregorianCalendar().getTimeInMillis() + 60 * 1000;
