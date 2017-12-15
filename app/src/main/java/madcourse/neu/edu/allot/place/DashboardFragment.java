@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import madcourse.neu.edu.allot.R;
 import madcourse.neu.edu.allot.blackbox.models.Group;
 import madcourse.neu.edu.allot.blackbox.models.User;
+import madcourse.neu.edu.allot.group.GroupActivity;
 import madcourse.neu.edu.allot.participant.ParticipantActivity;
 
 public class DashboardFragment extends Fragment {
@@ -40,7 +41,7 @@ public class DashboardFragment extends Fragment {
         }
 
         cardAdapter = new CardAdapter(list, rootView.getContext(),
-                R.layout.card_participant, ParticipantActivity.class);
+                R.layout.card_participant, null);
         participantList = rootView.findViewById(R.id.list_participants);
         participantList.setAdapter(cardAdapter);
 

@@ -57,14 +57,18 @@ public class CardAdapter extends BaseAdapter implements ListAdapter {
         TextView listItemText = (TextView) view.findViewById(R.id.label_card_title);
 
         listItemText.setText(list.get(position));
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context, activity);
-                intent.putExtra("name", list.get(position));
-                context.startActivity(intent);
-            }
-        });
+
+        if (activity != null) {
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, activity);
+                    intent.putExtra("name", list.get(position));
+                    context.startActivity(intent);
+                }
+            });
+        }
+
         return view;
     }
 }
