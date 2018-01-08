@@ -6,7 +6,7 @@ package madcourse.neu.edu.allot.blackbox.api;
 
 public class AllotApi {
 
-    public static final String BASE_URL = "http://allot.zeko.in/api/";
+    public static final String BASE_URL = "https://allot.zeko.in/api/";
 
     // login
     public static final String LOGIN_URL = BASE_URL + "user/login";
